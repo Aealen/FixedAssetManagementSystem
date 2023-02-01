@@ -6,18 +6,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @Description: TODO
- * @ClassName: HelloController
+ * @ClassName: TestController
  * @Author: Aealen
  * @Date: 2023/1/31 23:20
  */
 @RestController
-public class HelloController {
+@RequestMapping("/test")
+public class TestController {
 
     @RequestMapping("/hello")
 //    @PreAuthorize("hasAnyAuthority('system.dept.list')")
-    @PreAuthorize("@AowuEx.hasAnyAuthority('system.dept.list')")
 //    @PreAuthorize("hasAnyAuthority('admin','test','system.dept.list')")   //可匹配多个权限
 //    @PreAuthorize("hasRole('system.dept.list')")
+    @PreAuthorize("hasAuthority('system:user:test')")
     public String hello(){
         return "Hello";
     }
