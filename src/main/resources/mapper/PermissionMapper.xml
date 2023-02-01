@@ -3,7 +3,7 @@
 <mapper namespace="tech.aowu.mapper.PermissionMapper">
     <select id="selectPermsByUserId" resultType="java.lang.String">
         SELECT DISTINCT
-            *
+            um_permission.perms
         FROM
             um_permission
                 LEFT JOIN um_role_permission ON um_permission.id = um_role_permission.permid
