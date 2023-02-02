@@ -51,7 +51,7 @@ public class LoginServiceImpl implements LoginService {
 
 
         map.put("token",jwt);
-        map.put("authenticate",authenticate.getAuthorities().toString());
+//        map.put("authenticate",authenticate.getAuthorities().toString());
         return new ResponseResult(200,"登陆成功",map);
     }
 
