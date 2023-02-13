@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import tech.aowu.entity.LoginUser;
-import tech.aowu.entity.dto.UmUser;
+import tech.aowu.entity.UmUser;
 import tech.aowu.mapper.PermissionMapper;
 import tech.aowu.mapper.UserMapper;
 
@@ -36,6 +36,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         QueryWrapper<UmUser> queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("username",username);
         UmUser user = userMapper.selectOne(queryWrapper);
+
+
         //如果查询不到数据就通过抛出异常来给出提示
         if(Objects.isNull(user)){
             throw new RuntimeException("用户名或密码错误");
@@ -46,7 +48,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         List<String> permslist = permissionMapper.selectPermsByUserId(user.getUid());
 
 
-        //封装成UserDetails对象返回 
+        //封装成UserDetails对象返回
         return new LoginUser(user,permslist);
     }
 }

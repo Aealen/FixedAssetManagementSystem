@@ -25,7 +25,7 @@ public class JwtUtil {
         String token = UUID.randomUUID().toString().replaceAll("-", "");
         return token;
     }
-    
+
     /**
      * 生成jtw
      * @param subject token中要存放的数据（json格式）
@@ -60,7 +60,7 @@ public class JwtUtil {
         return Jwts.builder()
                 .setId(uuid)              //唯一的ID
                 .setSubject(subject)   // 主题  可以是JSON数据
-                .setIssuer("sg")     // 签发者
+                .setIssuer("Aealen")     // 签发者
                 .setIssuedAt(now)      // 签发时间
                 .signWith(signatureAlgorithm, secretKey) //使用HS256对称加密算法签名, 第二个参数为秘钥
                 .setExpiration(expDate);
@@ -99,7 +99,7 @@ public class JwtUtil {
         SecretKey key = new SecretKeySpec(encodedKey, 0, encodedKey.length, "AES");
         return key;
     }
-    
+
     /**
      * 解析
      *

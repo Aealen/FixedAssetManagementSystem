@@ -17,8 +17,8 @@ public class TestController {
     @RequestMapping("/hello")
 //    @PreAuthorize("hasAnyAuthority('system.dept.list')")
 //    @PreAuthorize("hasAnyAuthority('admin','test','system.dept.list')")   //可匹配多个权限
-//    @PreAuthorize("hasRole('system.dept.list')")
-    @PreAuthorize("hasAuthority('system:user:test')")
+//    @PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasAuthority('system:user:admin')")
     public String hello(){
         return "Hello";
     }

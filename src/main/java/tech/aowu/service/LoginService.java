@@ -2,7 +2,7 @@ package tech.aowu.service;
 
 
 import tech.aowu.entity.ResponseResult;
-import tech.aowu.entity.dto.UmUser;
+import tech.aowu.entity.UmUser;
 
 /**
  * @Description: TODO
@@ -14,5 +14,6 @@ public interface LoginService {
 
     ResponseResult login(UmUser user);
     ResponseResult logout();
+    ResponseResult regist(UmUser user);
 
 }

@@ -3,7 +3,7 @@ package tech.aowu.entity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
- * @Author 三更  B站： https://space.bilibili.com/663528522
+ * @Author Aealen
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseResult<T> {

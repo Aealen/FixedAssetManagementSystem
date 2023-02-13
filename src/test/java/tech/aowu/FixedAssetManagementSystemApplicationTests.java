@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import tech.aowu.entity.dto.UmUser;
+import tech.aowu.entity.UmUser;
 import tech.aowu.mapper.UserMapper;
 
 import java.util.List;

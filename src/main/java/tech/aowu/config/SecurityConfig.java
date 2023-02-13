@@ -3,6 +3,7 @@ package tech.aowu.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -66,9 +67,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 // 对于登录接口 允许匿名访问
-                .antMatchers("/user/login").anonymous()
-                .antMatchers("/test/**").hasAuthority("system:user:test")
-//                .antMatchers("/hello").hasAnyAuthority("system.dept.list")
+                .antMatchers("/user/auth/**").anonymous()
+                .antMatchers("/swagger-ui").anonymous()
+//                .antMatchers("/test/**").hasAuthority("system:user:test")
 
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated();
@@ -84,6 +85,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/user/login");
+        web.ignoring()
+                .antMatchers(HttpMethod.OPTIONS,"/**")
+                .antMatchers("/user/login")
+                .antMatchers("/swagger-ui")
+                .antMatchers("/webjars/springfox-swagger-ui/**")
+                .antMatchers("/swagger-ui/**")
+                .antMatchers("/swagger-resources/**")
+                .antMatchers("/v2/api-docs/**");
+        ;
+
     }
 }

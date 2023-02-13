@@ -1,14 +1,18 @@
 package tech.aowu.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import tech.aowu.entity.LoginUser;
 import tech.aowu.entity.ResponseResult;
-import tech.aowu.entity.dto.UmUser;
+import tech.aowu.entity.UmUser;
+import tech.aowu.mapper.UserMapper;
 import tech.aowu.service.LoginService;
 import tech.aowu.utils.JwtUtil;
 import tech.aowu.utils.RedisCache;
@@ -33,6 +37,12 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     private RedisCache redisCache;
 
+    @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public ResponseResult login(UmUser user) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword());
@@ -46,10 +56,14 @@ public class LoginServiceImpl implements LoginService {
         String jwt = JwtUtil.createJWT(userId);
         //authenticate存入redis
         redisCache.setCacheObject("login:"+userId,loginUser);
+
+        //user表更新登陆时间
+        int updateLoginTimeByUid = userMapper.updateLoginTimeByUid(loginUser.getUser().getUid());
+        if (updateLoginTimeByUid==0)
+            return new ResponseResult(150,"数据库操作异常");
+
         //把token响应给前端
         HashMap<String,String> map = new HashMap<>();
-
-
         map.put("token",jwt);
 //        map.put("authenticate",authenticate.getAuthorities().toString());
         return new ResponseResult(200,"登陆成功",map);
@@ -67,8 +81,35 @@ public class LoginServiceImpl implements LoginService {
         Long userid = loginUser.getUser().getUid();
         //删除redis中的值
         redisCache.deleteObject("login:"+userid);
-
         return new ResponseResult(200,"注销成功");
+    }
+
+    /**
+     * 用户注册
+     * @param user
+     * @return  ResponseResult
+     */
+    @Override
+    public ResponseResult regist(UmUser user) {
+        //判断用户名是否存在
+
+        //按用户名查用户
+        QueryWrapper<UmUser> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("username",user.getUsername());
+        UmUser queryUser = userMapper.selectOne(queryWrapper);
+        if(Objects.nonNull(queryUser)){
+            return new ResponseResult(102,"用户已存在");
+        }
+
+        //密码加密
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+
+        int regist = userMapper.regist(user);
+        if (regist==0)
+            return new ResponseResult(150,"数据库操作异常!请尽快联系网站管理员!");
+        return new ResponseResult(200,"注册成功");
+
     }
 }
 
