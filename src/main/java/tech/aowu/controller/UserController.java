@@ -1,6 +1,7 @@
 package tech.aowu.controller;
 
 import io.swagger.annotations.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,6 +37,7 @@ public class UserController {
             @ApiResponse(code = 150, message = "数据库操作异常")
 
     })
+    @PreAuthorize("hasAuthority('system:user:admin')")
     @GetMapping("/user/queryUserByPage")
     public ResponseResult queryUserByPage(@RequestBody QueryByPageParams params){
         return userService.queryUserByPage(params);
@@ -48,6 +50,7 @@ public class UserController {
             @ApiResponse(code = 150, message = "数据库操作异常!请尽快联系系统管理员!")
 
     })
+    @PreAuthorize("hasAuthority('system:user:admin')")
     @GetMapping("/user/getUserCount")
     public ResponseResult getUserCount(){
         return userService.getUserCount();

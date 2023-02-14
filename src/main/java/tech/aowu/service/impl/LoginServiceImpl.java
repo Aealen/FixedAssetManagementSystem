@@ -118,7 +118,7 @@ public class LoginServiceImpl implements LoginService {
             return new ResponseResult(102,"用户已存在");
         }
 
-        UmUser umUser = userView.setUmUser(new UmUser());
+        UmUser umUser = userView.setUmUser();
 
         //密码加密
         String encodedPassword = passwordEncoder.encode(umUser.getPassword());

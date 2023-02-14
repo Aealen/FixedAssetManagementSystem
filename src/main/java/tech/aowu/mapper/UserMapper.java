@@ -36,11 +36,11 @@ public interface UserMapper extends BaseMapper<UmUser> {
     /**
      * 分页查询所有用户
      * @param keyword
-     * @param page
-     * @param perPage
+     * @param pageSize
+     * @param currIndex
      * @return
      */
-    List<UserView> getUserByPage(String keyword,int page,int perPage);
+    List<UserView> getUserByPage(String keyword,int currIndex,int pageSize);
 
     /**
      * 获得未删除的用户数量
@@ -48,6 +48,29 @@ public interface UserMapper extends BaseMapper<UmUser> {
      */
     int getUserCount();
 
+    /**
+     * 修改用户密码
+     * @param uid
+     * @param password
+     * @return int 0更新失败 1更新成功
+     */
+    int changeuserPwd(Long uid,String password);
+
+    /**
+     * 修改用户邮箱
+     * @param uid
+     * @param email
+     * @return int 0更新失败 1更新成功
+     */
+    int changeUserEmail(Long uid,String email);
+
+    /**
+     * 修改用户电话
+     * @param uid
+     * @param phone
+     * @return int 0更新失败 1更新成功
+     */
+    int changeUserPhone(Long uid, String phone);
 
 
 }

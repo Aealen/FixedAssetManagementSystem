@@ -10,6 +10,11 @@
     </select>
 
     <select id="getUserByPage" resultType="tech.aowu.entity.vo.UserView">
+        select * from users
+        <if test="keyword!=''">
+            where username like CONCAT('%',#{name},'%')
+        </if>
+        limit #{currIndex},#{pageSize}
 
     </select>
     <select id="getUserCount" resultType="java.lang.Integer">
@@ -20,8 +25,16 @@
     <update id="updateLoginTimeByUid" parameterType="long">
         update um_user set login_time =current_timestamp where uid=#{uid};
     </update>
+    <update id="changeuserPwd">
+        update um_user set password=#{password} where uid=#{uid};
+    </update>
+    <update id="changeUserEmail">
+        update um_user set email=#{email} where uid=#{uid};
+    </update>
+    <update id="changeUserPhone">
+        update um_user set phone_num=#{phone} where uid=#{uid};
 
-
+    </update>
 
 
     <insert id="regist" parameterType="tech.aowu.entity.UmUser"  useGeneratedKeys = "true"  keyProperty = "uid">

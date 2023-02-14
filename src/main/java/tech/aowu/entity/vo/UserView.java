@@ -16,9 +16,21 @@ import tech.aowu.entity.UmUser;
 @NoArgsConstructor
 public class UserView {
 
-    public UmUser setUmUser(UmUser umUser){
+    public UmUser setUmUser(){
+        UmUser umUser=new UmUser();
+        umUser.setUid(this.getId());
         umUser.setUsername(this.username);
         umUser.setPassword(this.password);
+        umUser.setNickname(this.nickname);
+        umUser.setDepartment(this.deptId);
+        umUser.setPhoneNum(this.phoneNum);
+        umUser.setEmail(this.email);
+        return umUser;
+    }
+    public UmUser setUmUserWithoutPassword(){
+        UmUser umUser=new UmUser();
+        umUser.setUid(this.getId());
+        umUser.setUsername(this.username);
         umUser.setNickname(this.nickname);
         umUser.setDepartment(this.deptId);
         umUser.setPhoneNum(this.phoneNum);

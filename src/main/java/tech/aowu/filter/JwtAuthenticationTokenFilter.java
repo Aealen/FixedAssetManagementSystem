@@ -52,7 +52,6 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             String userSubject = claims.getSubject();//处理 token JSON对象
             JSONObject jsonObject = JSON.parseObject(userSubject);
             userid = (String) jsonObject.get("uid");
-            System.out.println("claims.getSubject()"+userid);
 
         } catch (Exception e) {
             e.printStackTrace();

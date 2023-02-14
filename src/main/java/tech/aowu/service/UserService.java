@@ -2,6 +2,7 @@ package tech.aowu.service;
 
 import tech.aowu.entity.ResponseResult;
 import tech.aowu.entity.vo.QueryByPageParams;
+import tech.aowu.entity.vo.UserView;
 
 /**
  * @Description: TODO
@@ -13,4 +14,12 @@ public interface UserService {
     ResponseResult queryUserByPage(QueryByPageParams params);
 
     ResponseResult getUserCount();
+
+    ResponseResult updateByUid(UserView userView);
+
+    ResponseResult changePwd(Long uid,String password);
+
+    ResponseResult changeEmail(Long uid,String email);
+
+    ResponseResult changePhone(Long uid,String Phone);
 }
