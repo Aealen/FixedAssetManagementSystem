@@ -22,4 +22,6 @@ public interface UserService {
     ResponseResult changeEmail(Long uid,String email);
 
     ResponseResult changePhone(Long uid,String Phone);
+
+    ResponseResult changeUserStatus(Long uid,Integer status);
 }

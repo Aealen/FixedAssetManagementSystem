@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    @Transactional
+    @Transactional  //由于有多个操作同时进行可能会有单一操作失败 所以加回滚
     public ResponseResult updateByUid(UserView userView) {
 
         //修改role
@@ -162,4 +162,25 @@ public class UserServiceImpl implements UserService {
         return new ResponseResult(200,"号码修改成功!");
     }
 
+
+    /**
+     * 修改用户状态
+     * @param uid
+     * @param status 0正常 1 删除 2未认证
+     * @return
+     */
+    @Override
+    public ResponseResult changeUserStatus(Long uid,Integer status) {
+
+        UmUser umUser = new UmUser();
+        umUser.setUid(uid);
+        umUser.setDelFlag(status); //0正常 1 删除 2未认证
+
+        int res = userMapper.updateById(umUser);
+
+        if (res==0){
+            return new ResponseResult(150,"数据库操作异常!请尽快联系系统管理员!");
+        }
+        return new ResponseResult(200,"用户状态修改成功!");
+    }
 }
