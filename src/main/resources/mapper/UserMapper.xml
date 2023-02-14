@@ -9,6 +9,13 @@
         select * from um_user where username=#{username};
     </select>
 
+    <select id="getUserByPage" resultType="tech.aowu.entity.vo.UserView">
+
+    </select>
+    <select id="getUserCount" resultType="java.lang.Integer">
+        select count(*) from um_user where del_flag!=1;
+    </select>
+
 
     <update id="updateLoginTimeByUid" parameterType="long">
         update um_user set login_time =current_timestamp where uid=#{uid};

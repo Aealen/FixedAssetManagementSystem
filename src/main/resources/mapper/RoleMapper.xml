@@ -15,5 +15,8 @@
     <update id="updateUserRole" parameterType="long">
         update um_user_role set rid=#{rid} where uid=#{uid};
     </update>
+    <select id="getRoleByUid" resultType="java.lang.Long">
+        select rid from um_user_role where uid=#{uid};
+    </select>
 
 </mapper>

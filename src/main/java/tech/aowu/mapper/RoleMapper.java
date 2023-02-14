@@ -28,4 +28,12 @@ public interface RoleMapper extends BaseMapper<UmUserRole> {
      * @return int 0更新失败 1更新成功
      */
     int updateUserRole(long uid,long rid);
+
+    /**
+     * 根据用户id获取 rid
+     *
+     * @param uid
+     * @return rid
+     */
+    long getRoleByUid(long uid);
 }

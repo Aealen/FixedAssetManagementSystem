@@ -67,6 +67,7 @@ public class LoginServiceImpl implements LoginService {
         HashMap<String, String> jwtMap = new HashMap<>();
         jwtMap.put("uid",loginUser.getUser().getUid().toString());
         jwtMap.put("username",loginUser.getUser().getUsername());
+        jwtMap.put("rid", String.valueOf(roleMapper.getRoleByUid(loginUser.getUser().getUid())));
 
         String jwt = JwtUtil.createJWT(JSON.toJSONString(jwtMap));
         //authenticate存入redis

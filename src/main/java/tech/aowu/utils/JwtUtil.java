@@ -81,7 +81,7 @@ public class JwtUtil {
     public static void main(String[] args) throws Exception {
 //        String jwt = createJWT("2123");
 //        String jwt = createJWT("1234");
-        String jwt = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4OTQ4ZDYwNzQ5Yzk0NmNmYjE2ZDIyMGEwMDBmMTVlNyIsInN1YiI6IntcInVpZFwiOlwiNVwiLFwidXNlcm5hbWVcIjpcIkJyYWtlblwifSIsImlzcyI6IkFlYWxlbiIsImlhdCI6MTY3NjM0MjQwMiwiZXhwIjoxNjc2MzQ2MDAyfQ.SQU778t_fKiCRaWVNUriL9xLdYuuxUA8whg9rO9gja8";
+        String jwt = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxZTU5ZGJiMzljNDI0ZmY2OGRiNzdiMzY0NzFhODY4NyIsInN1YiI6IntcInVpZFwiOlwiMTNcIixcInJpZFwiOlwiM1wiLFwidXNlcm5hbWVcIjpcIkVsb2VcIn0iLCJpc3MiOiJBZWFsZW4iLCJpYXQiOjE2NzYzNTA2ODAsImV4cCI6MTY3NjM1NDI4MH0.E_ZKMJUMv7UvJCZ79miDezpc8tYjZyo7RP0EQ14C88k";
         System.out.println(jwt);
 
         Claims claims = parseJWT(jwt);

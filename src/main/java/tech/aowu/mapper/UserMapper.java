@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Options;
 import tech.aowu.entity.UmUser;
 import tech.aowu.entity.vo.UserView;
 
+import java.util.List;
+
 
 @Mapper
 public interface UserMapper extends BaseMapper<UmUser> {
@@ -24,15 +26,27 @@ public interface UserMapper extends BaseMapper<UmUser> {
      */
     int updateLoginTimeByUid(long uid);
 
-
-
-
     /**
      * 用户注册
      * @param umUser
      * @return int 0注册失败 1注册成功
      */
     int regist(UmUser umUser);
+
+    /**
+     * 分页查询所有用户
+     * @param keyword
+     * @param page
+     * @param perPage
+     * @return
+     */
+    List<UserView> getUserByPage(String keyword,int page,int perPage);
+
+    /**
+     * 获得未删除的用户数量
+     * @return 用户数量
+     */
+    int getUserCount();
 
 
 

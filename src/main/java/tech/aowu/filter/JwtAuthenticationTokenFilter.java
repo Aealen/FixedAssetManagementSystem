@@ -1,5 +1,8 @@
 package tech.aowu.filter;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Objects;
 
 /**
@@ -45,7 +49,10 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         String userid;
         try {
             Claims claims = JwtUtil.parseJWT(token);
-            userid = claims.getSubject();
+            String userSubject = claims.getSubject();//处理 token JSON对象
+            JSONObject jsonObject = JSON.parseObject(userSubject);
+            userid = (String) jsonObject.get("uid");
+            System.out.println("claims.getSubject()"+userid);
 
         } catch (Exception e) {
             e.printStackTrace();

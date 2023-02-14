@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import tech.aowu.entity.ResponseResult;
 import tech.aowu.entity.UmUser;
 
+import tech.aowu.entity.vo.QueryByPageParams;
 import tech.aowu.entity.vo.UserView;
 import tech.aowu.service.LoginService;
 
@@ -44,7 +45,7 @@ public class LoginController {
     }
 
     @ApiOperation(value = "用户登陆",notes = "<span style='color:red;'>详细描述：</span>&nbsp;使用用户名和密码进行登陆")
-    @RequestMapping("/user/logout")
+    @RequestMapping("/user/auth/logout")
     public ResponseResult logout(){
         return loginService.logout();
     }
@@ -71,7 +72,6 @@ public class LoginController {
     public ResponseResult regist(@RequestBody UserView user){
         return loginService.regist(user);
     }
-
 
 
 
