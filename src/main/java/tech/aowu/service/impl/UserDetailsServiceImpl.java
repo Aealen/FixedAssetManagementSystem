@@ -38,7 +38,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         queryWrapper.eq("username",username);
         UmUser user = userMapper.selectOne(queryWrapper);
 
-
         //如果查询不到数据就通过抛出异常来给出提示
         if(Objects.isNull(user)){
             throw new RuntimeException("用户名或密码错误");

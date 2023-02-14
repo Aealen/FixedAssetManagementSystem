@@ -58,7 +58,8 @@ public class LoginController {
             @ApiImplicitParam(name = "nickname", value = "昵称", dataType = "String", defaultValue = "",paramType = "body"),
             @ApiImplicitParam(name = "department", value = "部门", dataType = "Integer", defaultValue = "",paramType = "body"),
             @ApiImplicitParam(name = "phoneNum", value = "电话", dataType = "String", defaultValue = "",paramType = "body"),
-            @ApiImplicitParam(name = "email", value = "邮箱", dataType = "String", defaultValue = "",paramType = "body")
+            @ApiImplicitParam(name = "email", value = "邮箱", dataType = "String", defaultValue = "",paramType = "body"),
+            @ApiImplicitParam(name = "rid", value = "角色", dataType = "String", defaultValue = "",paramType = "body")
     })
     @ApiResponses({
             @ApiResponse(code = 200, message = "注册成功"),
@@ -67,7 +68,7 @@ public class LoginController {
 
     })
     @PostMapping("/user/auth/regist")
-    public ResponseResult regist(@RequestBody UmUser user){
+    public ResponseResult regist(@RequestBody UserView user){
         return loginService.regist(user);
     }
 

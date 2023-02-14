@@ -15,6 +15,6 @@ public interface LoginService {
 
     ResponseResult login(UmUser user);
     ResponseResult logout();
-    ResponseResult regist(UmUser user);
+    ResponseResult regist(UserView user);
 
 }

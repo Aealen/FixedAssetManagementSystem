@@ -6,7 +6,7 @@
 <mapper namespace="tech.aowu.mapper.UserMapper">
 
     <select id="getUmUserByUsername" resultType="tech.aowu.entity.UmUser" parameterType="String">
-        select * from users where username=#{username};
+        select * from um_user where username=#{username};
     </select>
 
 

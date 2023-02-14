@@ -101,29 +101,32 @@ public class LoginServiceImpl implements LoginService {
 
     /**
      * 用户注册
-     * @param user
+     * @param userView
      * @return  ResponseResult
      */
     @Override
-    public ResponseResult regist(UmUser user) {
+    public ResponseResult regist(UserView userView) {
         //判断用户名是否存在
         //按用户名查用户
-        /*QueryWrapper<UmUser> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("username",user.getUsername());
-        UmUser queryUser = userMapper.selectOne(queryWrapper);
-        */
-        UmUser queryUser = userMapper.getUmUserByUsername(user.getUsername());
+//        QueryWrapper<UmUser> queryWrapper=new QueryWrapper<>();
+//        queryWrapper.eq("username",userView.getUsername());
+//        UmUser queryUser = userMapper.selectOne(queryWrapper);
+
+        UmUser queryUser = userMapper.getUmUserByUsername(userView.getUsername());
         if(Objects.nonNull(queryUser)){
             return new ResponseResult(102,"用户已存在");
         }
 
+        UmUser umUser = userView.setUmUser(new UmUser());
+
         //密码加密
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
-        int regist = userMapper.regist(user);
+        String encodedPassword = passwordEncoder.encode(umUser.getPassword());
+        umUser.setPassword(encodedPassword);
+        int regist = userMapper.regist(umUser);
         //角色关系赋值
-        int roleWhenRegist = roleMapper.insetWhenRegist(user.getUid(), user.getRid());
+        int roleWhenRegist = roleMapper.insetWhenRegist(umUser.getUid(), userView.getRoleId());
         if (roleWhenRegist==0||regist==0)
+        if (regist==0)
             return new ResponseResult(150,"数据库操作异常!请尽快联系系统管理员!");
 
         return new ResponseResult(200,"注册成功");

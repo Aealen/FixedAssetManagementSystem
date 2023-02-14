@@ -3,6 +3,7 @@ package tech.aowu.entity.vo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import tech.aowu.entity.UmUser;
 
 /**
  * @Description: 用户视图
@@ -14,6 +15,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserView {
+
+    public UmUser setUmUser(UmUser umUser){
+        umUser.setUsername(this.username);
+        umUser.setPassword(this.password);
+        umUser.setNickname(this.nickname);
+        umUser.setDepartment(this.deptId);
+        umUser.setPhoneNum(this.phoneNum);
+        umUser.setEmail(this.email);
+        return umUser;
+    }
+
     private Long id;
     private String nickname;
     private String username;
@@ -24,6 +36,5 @@ public class UserView {
     private String deptName;
     private Long roleId;
     private String roleName;
-    private String regTime;
-    private String loginTime;
+
 }

@@ -17,12 +17,11 @@ public class UmUser {
   private String nickname;
   private String username;
   private String password;
-  private Integer department;
+  private Long department;
   private Integer delFlag;
   private String phoneNum;
   private String email;
   private java.sql.Timestamp regTime;
   private java.sql.Timestamp loginTime;
-  private Long rid;
 
 }
