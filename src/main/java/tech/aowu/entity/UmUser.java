@@ -23,5 +23,6 @@ public class UmUser {
   private String email;
   private java.sql.Timestamp regTime;
   private java.sql.Timestamp loginTime;
+  private Long rid;
 
 }

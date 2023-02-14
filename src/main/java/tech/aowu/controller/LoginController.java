@@ -1,6 +1,7 @@
 package tech.aowu.controller;
 
 import io.swagger.annotations.*;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import tech.aowu.entity.ResponseResult;
 import tech.aowu.entity.UmUser;
 
+import tech.aowu.entity.vo.UserView;
 import tech.aowu.service.LoginService;
 
 /**
@@ -68,6 +70,8 @@ public class LoginController {
     public ResponseResult regist(@RequestBody UmUser user){
         return loginService.regist(user);
     }
+
+
 
 
 

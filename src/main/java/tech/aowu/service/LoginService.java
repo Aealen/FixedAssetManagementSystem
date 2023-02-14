@@ -3,6 +3,7 @@ package tech.aowu.service;
 
 import tech.aowu.entity.ResponseResult;
 import tech.aowu.entity.UmUser;
+import tech.aowu.entity.vo.UserView;
 
 /**
  * @Description: TODO

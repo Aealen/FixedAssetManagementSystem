@@ -1,5 +1,6 @@
 package tech.aowu.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 import tech.aowu.entity.LoginUser;
 import tech.aowu.entity.ResponseResult;
 import tech.aowu.entity.UmUser;
+import tech.aowu.entity.vo.UserView;
+import tech.aowu.mapper.RoleMapper;
 import tech.aowu.mapper.UserMapper;
 import tech.aowu.service.LoginService;
 import tech.aowu.utils.JwtUtil;
@@ -39,10 +42,18 @@ public class LoginServiceImpl implements LoginService {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private RoleMapper roleMapper;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * 用户登陆
+     * @Description: 用户登陆模块  登陆成功之后生产JWT
+     * @param user
+     * @return
+     */
     @Override
     public ResponseResult login(UmUser user) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword());
@@ -53,14 +64,18 @@ public class LoginServiceImpl implements LoginService {
         //使用userid生成token
         LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
         String userId = loginUser.getUser().getUid().toString();
-        String jwt = JwtUtil.createJWT(userId);
+        HashMap<String, String> jwtMap = new HashMap<>();
+        jwtMap.put("uid",loginUser.getUser().getUid().toString());
+        jwtMap.put("username",loginUser.getUser().getUsername());
+
+        String jwt = JwtUtil.createJWT(JSON.toJSONString(jwtMap));
         //authenticate存入redis
         redisCache.setCacheObject("login:"+userId,loginUser);
 
         //user表更新登陆时间
         int updateLoginTimeByUid = userMapper.updateLoginTimeByUid(loginUser.getUser().getUid());
         if (updateLoginTimeByUid==0)
-            return new ResponseResult(150,"数据库操作异常");
+            return new ResponseResult(150,"数据库操作异常!请尽快联系系统管理员!");
 
         //把token响应给前端
         HashMap<String,String> map = new HashMap<>();
@@ -92,11 +107,12 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public ResponseResult regist(UmUser user) {
         //判断用户名是否存在
-
         //按用户名查用户
-        QueryWrapper<UmUser> queryWrapper=new QueryWrapper<>();
+        /*QueryWrapper<UmUser> queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("username",user.getUsername());
         UmUser queryUser = userMapper.selectOne(queryWrapper);
+        */
+        UmUser queryUser = userMapper.getUmUserByUsername(user.getUsername());
         if(Objects.nonNull(queryUser)){
             return new ResponseResult(102,"用户已存在");
         }
@@ -104,10 +120,12 @@ public class LoginServiceImpl implements LoginService {
         //密码加密
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
-
         int regist = userMapper.regist(user);
-        if (regist==0)
-            return new ResponseResult(150,"数据库操作异常!请尽快联系网站管理员!");
+        //角色关系赋值
+        int roleWhenRegist = roleMapper.insetWhenRegist(user.getUid(), user.getRid());
+        if (roleWhenRegist==0||regist==0)
+            return new ResponseResult(150,"数据库操作异常!请尽快联系系统管理员!");
+
         return new ResponseResult(200,"注册成功");
 
     }

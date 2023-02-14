@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import tech.aowu.entity.LoginUser;
 import tech.aowu.entity.UmUser;
+import tech.aowu.entity.vo.UserView;
 import tech.aowu.mapper.PermissionMapper;
 import tech.aowu.mapper.UserMapper;
 

@@ -2,7 +2,9 @@ package tech.aowu.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
 import tech.aowu.entity.UmUser;
+import tech.aowu.entity.vo.UserView;
 
 
 @Mapper
@@ -22,11 +24,16 @@ public interface UserMapper extends BaseMapper<UmUser> {
      */
     int updateLoginTimeByUid(long uid);
 
+
+
+
     /**
      * 用户注册
      * @param umUser
      * @return int 0注册失败 1注册成功
      */
     int regist(UmUser umUser);
+
+
 
 }

@@ -6,8 +6,7 @@
 <mapper namespace="tech.aowu.mapper.UserMapper">
 
     <select id="getUmUserByUsername" resultType="tech.aowu.entity.UmUser" parameterType="String">
-        select * from um_user where username=#{username};
-
+        select * from users where username=#{username};
     </select>
 
 
@@ -15,7 +14,10 @@
         update um_user set login_time =current_timestamp where uid=#{uid};
     </update>
 
-    <insert id="regist" parameterType="tech.aowu.entity.UmUser" >
+
+
+
+    <insert id="regist" parameterType="tech.aowu.entity.UmUser"  useGeneratedKeys = "true"  keyProperty = "uid">
         insert into um_user
             (uid,nickname,username,password,department,del_flag,phone_num,email,reg_time,login_time)
         values
