@@ -1,16 +1,17 @@
 package tech.aowu.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.*;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tech.aowu.entity.ResponseResult;
 import tech.aowu.entity.vo.QueryByPageParams;
 import tech.aowu.service.UserService;
+import tech.aowu.utils.JwtUtil;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Description: TODO
@@ -38,7 +39,7 @@ public class UserController {
 
     })
     @PreAuthorize("hasAuthority('system:user:admin')")
-    @GetMapping("/user/queryUserByPage")
+    @PostMapping("/user/queryUserByPage")
     public ResponseResult queryUserByPage(@RequestBody QueryByPageParams params){
         return userService.queryUserByPage(params);
     }
@@ -55,4 +56,57 @@ public class UserController {
     public ResponseResult getUserCount(){
         return userService.getUserCount();
     }
+
+
+    @ApiOperation(value = "根据Token查询用户",notes = "<span style='color:red;'>详细描述：</span>&nbsp;根据Token查询用户")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "token", value = "Token", dataType = "String", defaultValue = "" ,paramType = "body"),
+    })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "成功"),
+            @ApiResponse(code = 103, message = "用户不存在"),
+            @ApiResponse(code = 150, message = "数据库操作异常")
+    })
+    @GetMapping("/user/getUserViewByToken")
+    public ResponseResult getUserViewByToken(HttpServletRequest request){
+
+        return userService.getUserViewByToken(request.getHeader("Authorization"));
+    }
+
+    @ApiOperation(value = "根据ID查询用户",notes = "<span style='color:red;'>详细描述：</span>&nbsp;根据ID查询用户")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "uid", value = "1", dataType = "Long", defaultValue = "" ,paramType = "body"),
+    })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "成功"),
+            @ApiResponse(code = 103, message = "用户不存在"),
+            @ApiResponse(code = 150, message = "数据库操作异常")
+    })
+    @PreAuthorize("hasAuthority('system:user:admin')")
+    @GetMapping("/user/getUserViewById/{uid}")
+    public ResponseResult getUserViewById(@PathVariable Long uid){
+
+        return userService.getUserViewById(uid);
+    }
+
+    @ApiOperation(value = "重置用户密码",notes = "<span style='color:red;'>详细描述：</span>&nbsp;重置用户密码")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "uid", value = "1", dataType = "Long", defaultValue = "" ,paramType = "body"),
+    })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "成功"),
+            @ApiResponse(code = 103, message = "用户不存在"),
+            @ApiResponse(code = 150, message = "数据库操作异常")
+    })
+    @PreAuthorize("hasAuthority('system:user:admin')")
+    @GetMapping("/user/resetPassword/{uid}")
+    public ResponseResult resetUserPassword(@PathVariable Long uid){
+
+        return userService.resetUserPassword(uid);
+    }
+
+
+
+
+
 }

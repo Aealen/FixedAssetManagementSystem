@@ -97,7 +97,7 @@ public class LoginServiceImpl implements LoginService {
         Long userid = loginUser.getUser().getUid();
         //删除redis中的值
         redisCache.deleteObject("login:"+userid);
-        return new ResponseResult(200,"注销成功");
+        return new ResponseResult(105,"用户登出");
     }
 
     /**

@@ -20,6 +20,10 @@
     <select id="getUserCount" resultType="java.lang.Integer">
         select count(*) from um_user where del_flag!=1;
     </select>
+    <select id="getUserViewById" resultType="tech.aowu.entity.vo.UserView">
+        select * from users
+        where id=#{uid}
+    </select>
 
 
     <update id="updateLoginTimeByUid" parameterType="long">

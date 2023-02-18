@@ -41,6 +41,12 @@ public interface UserMapper extends BaseMapper<UmUser> {
      * @return
      */
     List<UserView> getUserByPage(String keyword,int currIndex,int pageSize);
+    /**
+     * 根据ID查询用户信息
+     * @param uid
+     * @return
+     */
+    List<UserView> getUserViewById(Long uid);
 
     /**
      * 获得未删除的用户数量

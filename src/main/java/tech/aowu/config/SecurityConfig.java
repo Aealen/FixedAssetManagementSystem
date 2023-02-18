@@ -69,6 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 对于登录接口 允许匿名访问
                 .antMatchers("/user/auth/**").anonymous()
                 .antMatchers("/swagger-ui").anonymous()
+                .antMatchers("/swagger-ui/**").anonymous()
 //                .antMatchers("/test/**").hasAuthority("system:user:test")
 
                 // 除上面外的所有请求全部需要鉴权认证
@@ -87,10 +88,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
                 .antMatchers(HttpMethod.OPTIONS,"/**")
-                .antMatchers("/user/login")
+                .antMatchers("/user/auth/**")
                 .antMatchers("/swagger-ui")
-                .antMatchers("/webjars/springfox-swagger-ui/**")
                 .antMatchers("/swagger-ui/**")
+                .antMatchers("/webjars/springfox-swagger-ui/**")
                 .antMatchers("/swagger-resources/**")
                 .antMatchers("/v2/api-docs/**");
         ;

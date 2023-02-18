@@ -3,10 +3,7 @@ package tech.aowu.controller;
 import io.swagger.annotations.*;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tech.aowu.entity.ResponseResult;
 import tech.aowu.entity.UmUser;
 
@@ -44,7 +41,8 @@ public class LoginController {
         return loginService.login(user);
     }
 
-    @ApiOperation(value = "用户登陆",notes = "<span style='color:red;'>详细描述：</span>&nbsp;使用用户名和密码进行登陆")
+
+    @ApiOperation(value = "用户注销",notes = "<span style='color:red;'>详细描述：</span>&nbsp;用户注销")
     @RequestMapping("/user/auth/logout")
     public ResponseResult logout(){
         return loginService.logout();
@@ -66,7 +64,6 @@ public class LoginController {
             @ApiResponse(code = 200, message = "注册成功"),
             @ApiResponse(code = 102, message = "用户已存在"),
             @ApiResponse(code = 150, message = "数据库操作异常")
-
     })
     @PostMapping("/user/auth/regist")
     public ResponseResult regist(@RequestBody UserView user){

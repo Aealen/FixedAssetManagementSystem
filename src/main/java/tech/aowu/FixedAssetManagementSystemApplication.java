@@ -8,7 +8,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @MapperScan("tech.aowu.mapper")
-@CrossOrigin
+@CrossOrigin(originPatterns = "*",allowCredentials = "true")
 @EnableSwagger2
 
 public class FixedAssetManagementSystemApplication {

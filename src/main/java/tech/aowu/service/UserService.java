@@ -24,4 +24,10 @@ public interface UserService {
     ResponseResult changePhone(Long uid,String Phone);
 
     ResponseResult changeUserStatus(Long uid,Integer status);
+
+    ResponseResult getUserViewByToken(String token);
+
+    ResponseResult getUserViewById(Long uid);
+
+    ResponseResult resetUserPassword(Long uid);
 }

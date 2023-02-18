@@ -1,5 +1,7 @@
 package tech.aowu.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -12,9 +14,11 @@ import tech.aowu.entity.vo.UserView;
 import tech.aowu.mapper.RoleMapper;
 import tech.aowu.mapper.UserMapper;
 import tech.aowu.service.UserService;
+import tech.aowu.utils.JwtUtil;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @Description: TODO
@@ -59,13 +63,81 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseResult queryUserByPage(QueryByPageParams params) {
 
-        if (params.getKeyword().isEmpty()||params.getKeyword()==null){
+        if (params.getKeyword()==null||params.getKeyword().isEmpty()){
             params.setKeyword("");
         }
         int currIndex=(params.getPage()-1)*params.getPerPage();
         List<UserView> userByPage = userMapper.getUserByPage(params.getKeyword(),currIndex, params.getPerPage());
 
         return new ResponseResult(200,"查询成功",userByPage);
+    }
+
+    /**
+     * 根据Token获取用户信息
+     * @param token
+     * @return 用户信息
+     */
+    @Override
+    public ResponseResult getUserViewByToken(String token) {
+
+        //解析Token
+        Long uid=null;
+        try {
+            String tokenString = JwtUtil.parseJWT(token).getSubject();
+
+            JSONObject jsonObject = JSON.parseObject(tokenString);
+
+
+            uid= Long.parseLong(String.valueOf(jsonObject.get("uid")));
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (Objects.isNull(uid)){
+            return new ResponseResult(106,"Token非法");
+        }
+        List<UserView> userViewById = userMapper.getUserViewById(uid);
+        if (Objects.isNull(userViewById.get(0))){
+            return new ResponseResult(103,"用户不存在");
+        }
+
+        return new ResponseResult(200,"查询成功", userViewById.get(0));
+    }
+
+    /**
+     * 根据Uid获取用户信息
+     * @param uid
+     * @return 用户信息
+     */
+    @Override
+    public ResponseResult getUserViewById(Long uid) {
+
+        List<UserView> userViewById = userMapper.getUserViewById(uid);
+
+        if (Objects.isNull(userViewById.get(0))){
+            return new ResponseResult(103,"用户不存在");
+        }
+
+        return new ResponseResult(200,"查询成功", userViewById.get(0));
+    }
+
+    /**
+     * 重置用户密码为 password
+     * @param uid
+     * @return
+     */
+    @Override
+    public ResponseResult resetUserPassword(Long uid) {
+        //重置密码 为password
+        String newPassword = passwordEncoder.encode("password");
+        UmUser umUser = new UmUser();
+        umUser.setUid(uid);
+        umUser.setPassword(newPassword);
+        int update = userMapper.updateById(umUser);
+        if (update==0)
+            return new ResponseResult(150,"数据库操作异常!请尽快联系系统管理员!");
+        return new ResponseResult(200,"密码重置成功");
     }
 
     /**

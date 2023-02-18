@@ -2,7 +2,10 @@ package tech.aowu.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import tech.aowu.entity.UmRole;
 import tech.aowu.entity.UmUserRole;
+
+import java.util.List;
 
 /**
  * @Description: 角色两表mapper
@@ -36,4 +39,18 @@ public interface RoleMapper extends BaseMapper<UmUserRole> {
      * @return rid
      */
     long getRoleByUid(long uid);
+
+    /**
+     * 获取所有角色信息
+     * @return
+     */
+    List<UmRole> getAllRoles();
+
+    /**
+     * 获取指定角色信息
+     * @param rid
+     * @return
+     */
+    UmRole getRoleById(Long rid);
+
 }

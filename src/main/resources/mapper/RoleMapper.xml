@@ -19,4 +19,11 @@
         select rid from um_user_role where uid=#{uid};
     </select>
 
+    <select id="getAllRoles" resultType="tech.aowu.entity.UmRole">
+        select * from um_role;
+    </select>
+    <select id="getRoleById" resultType="tech.aowu.entity.UmRole">
+        select * from um_role where rid=#{rid};
+    </select>
+
 </mapper>

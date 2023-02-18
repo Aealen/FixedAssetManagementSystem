@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import tech.aowu.entity.LoginUser;
+import tech.aowu.entity.ResponseResult;
 import tech.aowu.utils.JwtUtil;
 import tech.aowu.utils.RedisCache;
 
@@ -19,6 +20,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -36,9 +38,10 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        response.setContentType("text/html;charset=utf-8");
 
         //获取Token
-        String token = request.getHeader("token");
+        String token = request.getHeader("Authorization");
         if (!StringUtils.hasText(token)) {
             //没有Token  放行  不需解析token  交给后面过滤器
             filterChain.doFilter(request, response);
@@ -46,7 +49,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         }
 
         //解析Token
-        String userid;
+        String userid = null;
         try {
             Claims claims = JwtUtil.parseJWT(token);
             String userSubject = claims.getSubject();//处理 token JSON对象
@@ -55,7 +58,13 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("Token 非法!!");
+//            throw new RuntimeException("Token 非法!!");
+            PrintWriter writer = response.getWriter();
+
+            ResponseResult responseResult = new ResponseResult(106,"Token 非法!");
+            writer.write(JSON.toJSONString(responseResult));
+            return;
+
         }
 
         //从redis获取用户信息
@@ -63,7 +72,12 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         LoginUser loginUser = redisCache.getCacheObject(redisKey);
 
         if(Objects.isNull(loginUser)){
-            throw new RuntimeException("用户未登录");
+//            throw new RuntimeException("用户未登录");
+            PrintWriter writer = response.getWriter();
+
+            ResponseResult responseResult = new ResponseResult(104,"用户未登录");
+            writer.write(JSON.toJSONString(responseResult));
+            return;
         }
         //存入SecurityContextHolder
         // 用户信息

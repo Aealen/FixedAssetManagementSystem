@@ -48,5 +48,7 @@ public class UserView {
     private String deptName;
     private Long roleId;
     private String roleName;
+    private String regTime;
+    private String loginTime;
 
 }
