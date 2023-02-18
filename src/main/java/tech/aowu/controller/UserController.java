@@ -67,6 +67,7 @@ public class UserController {
             @ApiResponse(code = 103, message = "用户不存在"),
             @ApiResponse(code = 150, message = "数据库操作异常")
     })
+    @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:worker','system:user:reporter','system:user:custodian')")
     @GetMapping("/user/getUserViewByToken")
     public ResponseResult getUserViewByToken(HttpServletRequest request){
 
@@ -104,6 +105,40 @@ public class UserController {
 
         return userService.resetUserPassword(uid);
     }
+
+    @ApiOperation(value = "删除用户",notes = "<span style='color:red;'>详细描述：</span>&nbsp;删除用户")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "uid", value = "1", dataType = "Long", defaultValue = "" ,paramType = "body"),
+    })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "成功"),
+            @ApiResponse(code = 103, message = "用户不存在"),
+            @ApiResponse(code = 150, message = "数据库操作异常")
+    })
+    @PreAuthorize("hasAuthority('system:user:admin')")
+    @GetMapping("/user/delUser/{uid}")
+    public ResponseResult delUser(@PathVariable Long uid){
+
+        return userService.changeUserStatus(uid,1);
+    }
+
+    @ApiOperation(value = "删除用户",notes = "<span style='color:red;'>详细描述：</span>&nbsp;删除用户")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "uid", value = "1", dataType = "Long", defaultValue = "" ,paramType = "body"),
+    })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "成功"),
+            @ApiResponse(code = 103, message = "用户不存在"),
+            @ApiResponse(code = 150, message = "数据库操作异常")
+    })
+    @PreAuthorize("hasAuthority('system:user:admin')")
+    @GetMapping("/user/getAllCustodian")
+    public ResponseResult getAllCustodian(){
+
+        return userService.getAllCustodian();
+    }
+
+
 
 
 

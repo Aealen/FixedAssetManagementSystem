@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="tech.aowu.mapper.FAMapper">
+    <update id="delFaByFid">
+        update fa_fixedasset set del_flag=1 where fid=#{fid};
+    </update>
+
+
+    <select id="getFaByPage" resultType="tech.aowu.entity.vo.FAView">
+        select * from fixedassets
+        <if test="keyword!=''">
+            where fa_name like CONCAT('%',#{keyword},'%')
+        </if>
+        limit #{currIndex},#{pageSize}
+    </select>
+    <select id="getFaCount" resultType="java.lang.Integer">
+        select count(*) from fixedassets;
+    </select>
+    <select id="getAllFaType" resultType="tech.aowu.entity.FaType">
+        select * from fa_type;
+
+    </select>
+</mapper>

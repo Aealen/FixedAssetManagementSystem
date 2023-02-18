@@ -33,7 +33,6 @@ public class DeptController {
             @ApiResponse(code = 152, message = "参数非法"),
             @ApiResponse(code = 150, message = "数据库操作异常!请尽快联系系统管理员!"),
     })
-    @PreAuthorize("hasAuthority('system:user:admin')")
     @GetMapping("/getAllDepts")
     public ResponseResult getAllDepts(HttpServletRequest request){
         return deptService.getAllDepts();

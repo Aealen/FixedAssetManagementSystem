@@ -1,22 +1,26 @@
 package tech.aowu.entity;
 
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@TableName("fa_fixedasset")
 @AllArgsConstructor
+@Data
 @NoArgsConstructor
+@TableName("fa_fixedasset")
 public class FaFixedasset {
 
-  private Long fid;
+  @TableId
+  private long fid;
   private String name;
-  private Integer type;
+  private long type;
   private String model;
   private String producer;
   private double price;
-  private Integer dep;
+  private long dep;
   private long custodian;
   private long delFlag;
 
@@ -43,7 +47,7 @@ public class FaFixedasset {
     return type;
   }
 
-  public void setType(Integer type) {
+  public void setType(long type) {
     this.type = type;
   }
 
@@ -79,7 +83,7 @@ public class FaFixedasset {
     return dep;
   }
 
-  public void setDep(Integer dep) {
+  public void setDep(long dep) {
     this.dep = dep;
   }
 

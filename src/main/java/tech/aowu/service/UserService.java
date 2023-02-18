@@ -30,4 +30,6 @@ public interface UserService {
     ResponseResult getUserViewById(Long uid);
 
     ResponseResult resetUserPassword(Long uid);
+
+    ResponseResult getAllCustodian();
 }

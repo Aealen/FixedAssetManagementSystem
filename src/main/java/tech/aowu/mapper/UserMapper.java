@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import tech.aowu.entity.UmUser;
+import tech.aowu.entity.vo.CustodianView;
 import tech.aowu.entity.vo.UserView;
 
 import java.util.List;
@@ -79,4 +80,5 @@ public interface UserMapper extends BaseMapper<UmUser> {
     int changeUserPhone(Long uid, String phone);
 
 
+    List<CustodianView> getAllCustodian();
 }

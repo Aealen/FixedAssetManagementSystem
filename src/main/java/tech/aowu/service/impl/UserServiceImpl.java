@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import tech.aowu.entity.ResponseResult;
 import tech.aowu.entity.UmUser;
 import tech.aowu.entity.UmUserRole;
+import tech.aowu.entity.vo.CustodianView;
 import tech.aowu.entity.vo.QueryByPageParams;
 import tech.aowu.entity.vo.UserView;
 import tech.aowu.mapper.RoleMapper;
@@ -140,6 +141,7 @@ public class UserServiceImpl implements UserService {
         return new ResponseResult(200,"密码重置成功");
     }
 
+
     /**
      * 修改用户信息
      * @param userView
@@ -254,5 +256,19 @@ public class UserServiceImpl implements UserService {
             return new ResponseResult(150,"数据库操作异常!请尽快联系系统管理员!");
         }
         return new ResponseResult(200,"用户状态修改成功!");
+    }
+
+    /**
+     * 获得所有负责人信息
+     * @return
+     */
+    @Override
+    public ResponseResult getAllCustodian() {
+        List<CustodianView> custodianViews= userMapper.getAllCustodian();
+        if (Objects.isNull(custodianViews)){
+            return new ResponseResult(150,"数据库操作异常!请尽快联系系统管理员!");
+
+        }
+        return new ResponseResult(200,"success!",custodianViews);
     }
 }

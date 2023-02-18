@@ -12,7 +12,7 @@
     <select id="getUserByPage" resultType="tech.aowu.entity.vo.UserView">
         select * from users
         <if test="keyword!=''">
-            where username like CONCAT('%',#{name},'%')
+            where username like CONCAT('%',#{keyword},'%')
         </if>
         limit #{currIndex},#{pageSize}
 
@@ -23,6 +23,13 @@
     <select id="getUserViewById" resultType="tech.aowu.entity.vo.UserView">
         select * from users
         where id=#{uid}
+    </select>
+    <select id="getAllCustodian" resultType="tech.aowu.entity.vo.CustodianView">
+        SELECT users.id,users.nickname
+        from users
+        where
+            users.role_id=4
+
     </select>
 
 
