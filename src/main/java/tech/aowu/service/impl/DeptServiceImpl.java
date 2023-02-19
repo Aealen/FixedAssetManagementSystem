@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import tech.aowu.entity.FaDepartment;
 import tech.aowu.entity.ResponseResult;
 import tech.aowu.entity.UmUser;
+import tech.aowu.entity.vo.QueryByPageParams;
 import tech.aowu.entity.vo.UserView;
 import tech.aowu.mapper.DeptMapper;
 import tech.aowu.mapper.UserMapper;
@@ -36,6 +37,20 @@ public class DeptServiceImpl implements DeptService {
             return new ResponseResult(150,"数据库操作异常!请尽快联系系统管理员!");
         }
         return new ResponseResult(200,"success",allDepts);
+    }
+
+    @Override
+    public ResponseResult getAllDeptsByPage(QueryByPageParams params) {
+        if (params.getKeyword()==null||params.getKeyword().isEmpty()){
+            params.setKeyword("");
+        }
+        int currIndex=(params.getPage()-1)*params.getPerPage();
+
+        List<FaDepartment> departmentList=deptMapper.getAllDeptsByPage(params.getKeyword(),currIndex, params.getPerPage());
+        if (Objects.isNull(departmentList.get(0))){
+            return new ResponseResult(150,"数据库操作异常!请尽快联系系统管理员!");
+        }
+        return new ResponseResult(200,"查询成功",departmentList);
     }
 
     @Override

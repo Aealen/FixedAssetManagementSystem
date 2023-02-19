@@ -1,6 +1,7 @@
 package tech.aowu.service;
 
 import tech.aowu.entity.FaFixedasset;
+import tech.aowu.entity.FaType;
 import tech.aowu.entity.ResponseResult;
 import tech.aowu.entity.vo.QueryByPageParams;
 
@@ -20,4 +21,11 @@ public interface FAService {
     ResponseResult addFa(FaFixedasset faFixedasset);
 
     ResponseResult getAllType();
+
+    ResponseResult getAllTypeByPage(QueryByPageParams queryByPageParams);
+
+    ResponseResult getTypeCount();
+
+    ResponseResult addType(String typename);
+    ResponseResult updateTypeInfo(FaType faType);
 }

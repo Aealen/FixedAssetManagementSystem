@@ -4,6 +4,7 @@ import io.swagger.annotations.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import tech.aowu.entity.FaFixedasset;
+import tech.aowu.entity.FaType;
 import tech.aowu.entity.ResponseResult;
 import tech.aowu.entity.vo.QueryByPageParams;
 import tech.aowu.service.FAService;
@@ -102,6 +103,49 @@ public class FAController {
     @GetMapping("/getAllType")
     public ResponseResult getAllType(){
         return faService.getAllType();
+    }
+
+
+    @ApiOperation(value = "获取所有资产类型(分页)",notes = "<span style='color:red;'>详细描述：</span>&nbsp;获取所有资产类型")
+    @ApiResponses({
+            @ApiResponse(code = 150, message = "数据库操作异常")
+    })
+    @PreAuthorize("hasAnyAuthority('system:user:admin')")
+    @PostMapping("/getAllTypeByPage")
+    public ResponseResult getAllTypeByPage(@RequestBody QueryByPageParams queryByPageParams){
+        return faService.getAllTypeByPage(queryByPageParams);
+    }
+    @ApiOperation(value = "获取所有类型总数",notes = "<span style='color:red;'>详细描述：</span>&nbsp;获取所有类型总数")
+    @ApiResponses({
+            @ApiResponse(code = 150, message = "数据库操作异常")
+    })
+    @PreAuthorize("hasAnyAuthority('system:user:admin')")
+    @GetMapping("/getTypeCount")
+    public ResponseResult getTypeCount(){
+        return faService.getTypeCount();
+    }
+
+    @ApiOperation(value = "获取所有类型总数",notes = "<span style='color:red;'>详细描述：</span>&nbsp;获取所有类型总数")
+    @ApiResponses({
+            @ApiResponse(code = 150, message = "数据库操作异常"),
+            @ApiResponse(code = 170, message = "类型已存在")
+    })
+    @PreAuthorize("hasAnyAuthority('system:user:admin')")
+    @PostMapping("/addType")
+    public ResponseResult addType( String typename){
+        return faService.addType(typename);
+    }
+
+
+    @ApiOperation(value = "更新类型信息",notes = "<span style='color:red;'>详细描述：</span>&nbsp;更新类型信息")
+    @ApiResponses({
+            @ApiResponse(code = 150, message = "数据库操作异常"),
+            @ApiResponse(code = 171, message = "类型不存在")
+    })
+    @PreAuthorize("hasAnyAuthority('system:user:admin')")
+    @PostMapping("/updateTypeInfo")
+    public ResponseResult updateTypeInfo(@RequestBody FaType faType){
+        return faService.updateTypeInfo(faType);
     }
 
 

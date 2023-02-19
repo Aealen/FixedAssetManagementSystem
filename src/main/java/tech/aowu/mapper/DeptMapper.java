@@ -19,4 +19,5 @@ public interface DeptMapper extends BaseMapper<FaDepartment> {
 
    FaDepartment getDeptByDid(Long did);
 
+    List<FaDepartment> getAllDeptsByPage(String keyword, int currIndex, Integer perPage);
 }

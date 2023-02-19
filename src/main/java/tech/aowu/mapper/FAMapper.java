@@ -26,5 +26,12 @@ public interface FAMapper extends BaseMapper<FaFixedasset> {
     int delFaByFid(Long fid);
 
 
+    // Type Ref
     List<FaType> getAllFaType();
+    List<FaType> getAllFaTypeByPage(String keyword,int currIndex,int pageSize);
+    FaType getTypeByName(String name);
+    int addType(String name);
+    int getTypeCount();
+    int updateTypeInfo(FaType faType);
+    FaType getTypeByTid(Long tid);
 }

@@ -69,7 +69,9 @@ public class UserServiceImpl implements UserService {
         }
         int currIndex=(params.getPage()-1)*params.getPerPage();
         List<UserView> userByPage = userMapper.getUserByPage(params.getKeyword(),currIndex, params.getPerPage());
-
+        if (Objects.isNull(userByPage.get(0))){
+            return new ResponseResult(150,"数据库操作异常!请尽快联系系统管理员!");
+        }
         return new ResponseResult(200,"查询成功",userByPage);
     }
 

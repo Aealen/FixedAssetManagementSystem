@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import tech.aowu.entity.ResponseResult;
 import tech.aowu.entity.UmUserRole;
+import tech.aowu.entity.vo.QueryByPageParams;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,4 +23,6 @@ public interface DeptService {
     ResponseResult getAllDepts();
 
     ResponseResult setUserDept(Long uid, Long did);
+
+    ResponseResult getAllDeptsByPage(QueryByPageParams params);
 }

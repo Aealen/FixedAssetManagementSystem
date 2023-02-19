@@ -6,9 +6,17 @@
 <mapper namespace="tech.aowu.mapper.DeptMapper">
 
     <select id="getAllDepts" resultType="tech.aowu.entity.FaDepartment">
-        select * from fa_department;
+        select * from fa_department where del_tag=0 ;
     </select>
     <select id="getDeptByDid" resultType="tech.aowu.entity.FaDepartment">
-        select * from fa_department where did=#{did};
+        select * from fa_department where did=#{did} AND del_tag=0;
+    </select>
+    <select id="getAllDeptsByPage" resultType="tech.aowu.entity.FaDepartment">
+        select * from fa_department
+        where del_tag=0
+        <if test="keyword!=''">
+            AND name like CONCAT('%',#{keyword},'%')
+        </if>
+        limit #{currIndex},#{pageSize}
     </select>
 </mapper>

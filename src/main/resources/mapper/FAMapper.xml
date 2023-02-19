@@ -4,8 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="tech.aowu.mapper.FAMapper">
+    <insert id="addType">
+        insert into fa_type (tid,name,del_flag)
+        values (null ,#{name},0);
+    </insert>
     <update id="delFaByFid">
         update fa_fixedasset set del_flag=1 where fid=#{fid};
+    </update>
+    <update id="updateTypeInfo" parameterType="tech.aowu.entity.FaType">
+        update fa_type set name=#{name},del_flag=#{delFlag} where tid=#{tid};
     </update>
 
 
@@ -20,7 +27,24 @@
         select count(*) from fixedassets;
     </select>
     <select id="getAllFaType" resultType="tech.aowu.entity.FaType">
-        select * from fa_type;
+        select * from fa_type where del_flag=0;
 
+    </select>
+    <select id="getAllFaTypeByPage" resultType="tech.aowu.entity.FaType">
+        select * from fa_type
+        where del_flag=0
+        <if test="keyword!=''">
+            AND name like CONCAT('%',#{keyword},'%')
+        </if>
+        limit #{currIndex},#{pageSize}
+    </select>
+    <select id="getTypeCount" resultType="java.lang.Integer">
+        select count(*) from fa_type where del_flag=0;
+    </select>
+    <select id="getTypeByName" resultType="tech.aowu.entity.FaType">
+        select * from fa_type where del_flag=0 AND name=#{name};
+    </select>
+    <select id="getTypeByTid" resultType="tech.aowu.entity.FaType">
+        select * from fa_type where del_flag=0 AND tid=#{tid};
     </select>
 </mapper>
