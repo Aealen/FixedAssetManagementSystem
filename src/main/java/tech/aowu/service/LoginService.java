@@ -17,4 +17,8 @@ public interface LoginService {
     ResponseResult logout();
     ResponseResult regist(UserView user);
 
+
+    ResponseResult sendResetPasswordMail(String to);
+
+    ResponseResult checkCode(String code, String to);
 }

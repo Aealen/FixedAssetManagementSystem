@@ -16,10 +16,12 @@ import tech.aowu.mapper.RoleMapper;
 import tech.aowu.mapper.UserMapper;
 import tech.aowu.service.UserService;
 import tech.aowu.utils.JwtUtil;
+import tech.aowu.utils.RedisCache;
 
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 /**
  * @Description: TODO
@@ -41,6 +43,7 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private PasswordEncoder passwordEncoder;
+
 
     /**
      * 获取用户总数
@@ -272,4 +275,8 @@ public class UserServiceImpl implements UserService {
         }
         return new ResponseResult(200,"success!",custodianViews);
     }
+
+
+
+
 }

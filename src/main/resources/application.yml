@@ -4,6 +4,35 @@ spring:
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
+  mail:
+    #   设置邮箱主机(服务商)
+    host: smtp.exmail.qq.com
+    #   设置发件人的邮箱
+    username: sender@aowu.tech
+    #   设置密码，该处的密码是邮箱开启SMTP的授权码
+    password: Ff17301576208
+    #   配置端口
+    port: 465
+    #   使用协议
+    protocol: smtp
+    #   字符编码
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          # 必须进行授权认证，它的目的就是阻止他人任意乱发邮件
+          auth: true
+          #SMTP加密方式:连接到一个TLS保护连接
+          starttls:
+            enable: true
+          required: true
+          #          开启ssl
+          ssl:
+            enable: true
+          socketFactory:
+            port: 465
+            #			邮件工厂类路径
+            class: tech.aowu.utils.mail.MailSocketFactory
   redis:
     host: 10.10.11.254
     port: 6379

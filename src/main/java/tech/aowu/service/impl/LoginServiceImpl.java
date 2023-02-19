@@ -1,6 +1,7 @@
 package tech.aowu.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,12 +16,16 @@ import tech.aowu.entity.vo.UserView;
 import tech.aowu.mapper.RoleMapper;
 import tech.aowu.mapper.UserMapper;
 import tech.aowu.service.LoginService;
+import tech.aowu.service.MailService;
 import tech.aowu.utils.JwtUtil;
 import tech.aowu.utils.RedisCache;
 
 
+import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 /**
  * @Description: TODO
@@ -33,18 +38,23 @@ import java.util.Objects;
 @Service
 public class LoginServiceImpl implements LoginService {
 
-    @Autowired
+    @Resource
     private AuthenticationManager authenticationManager;
-    @Autowired
+    @Resource
     private RedisCache redisCache;
 
-    @Autowired
+    @Resource
     private UserMapper userMapper;
-    @Autowired
+    @Resource
     private RoleMapper roleMapper;
 
-    @Autowired
+    @Resource
     private PasswordEncoder passwordEncoder;
+
+    @Resource
+    private MailService mailService;
+
+
 
     /**
      * 用户登陆
@@ -133,5 +143,68 @@ public class LoginServiceImpl implements LoginService {
         return new ResponseResult(200,"注册成功");
 
     }
+
+    /**
+     * 发送重置密码的验证码
+     * @param to  目标邮箱
+     * @return
+     */
+    @Override
+    public ResponseResult sendResetPasswordMail(String to) {
+
+        //根据邮箱获取用户
+        QueryWrapper<UmUser> umUserQueryWrapper = new QueryWrapper<>();
+        umUserQueryWrapper.eq("email",to);
+        umUserQueryWrapper.eq("del_flag",0);
+        UmUser umUser = userMapper.selectOne(umUserQueryWrapper);
+        if (Objects.isNull(umUser)){
+            return new ResponseResult(191,"无此邮箱匹配的用户");
+        }
+
+        //产生五位随机数字
+        String code = String.valueOf(new Random().nextInt(9999, 99999));
+
+        if (mailService.sendResetPasswordCode(to, code)){
+            //code存入redis
+            redisCache.setCacheObject("code:" +umUser.getUid(),code);
+            //设置失效时间 5min
+            redisCache.expire("code:" +umUser.getUid(),1000*60*5);
+
+            return new ResponseResult(200, "success");
+        }else {
+            return new ResponseResult(190,"邮件发送失败");
+        }
+    }
+
+
+    /**
+     * 检查验证码是否正确
+     * @param code  用户传入的验证码
+     * @return
+     */
+    @Override
+    public ResponseResult checkCode(String code, String to){
+
+        //根据邮箱获取用户
+        QueryWrapper<UmUser> umUserQueryWrapper = new QueryWrapper<>();
+        umUserQueryWrapper.eq("email",to);
+        umUserQueryWrapper.eq("del_flag",0);
+        UmUser umUser = userMapper.selectOne(umUserQueryWrapper);
+        if (Objects.isNull(umUser)){
+            return new ResponseResult(191,"无此邮箱匹配的用户");
+        }
+
+        String codeInRedis = redisCache.getCacheObject("code:" + umUser.getUid());
+
+        if (code.equals(codeInRedis)){
+            //删除redis中存的验证码
+            redisCache.deleteObject("code:" + umUser.getUid());
+            return new ResponseResult(200, "true");
+        }else {
+            return new ResponseResult(107,"验证码错误");
+        }
+
+    }
+
 }
 

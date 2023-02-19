@@ -8,10 +8,16 @@ import tech.aowu.entity.vo.ResponseResult;
 import tech.aowu.entity.po.UmUser;
 import tech.aowu.entity.vo.UserView;
 import tech.aowu.mapper.UserMapper;
+import tech.aowu.service.LoginService;
+import tech.aowu.service.MailService;
 import tech.aowu.service.UserService;
+import tech.aowu.utils.MailClient;
+import tech.aowu.utils.RedisCache;
 
 import javax.annotation.Resource;
+import java.sql.Time;
 import java.util.List;
+import java.util.Random;
 
 @SpringBootTest
 class FixedAssetManagementSystemApplicationTests {
@@ -22,6 +28,33 @@ class FixedAssetManagementSystemApplicationTests {
 
     @Autowired
     private UserMapper userMapper;
+
+
+    @Resource
+    MailClient mailClient;
+
+    @Resource
+    MailService mailService;
+
+    @Resource
+    LoginService loginService;
+
+    @Resource
+    RedisCache redisCache;
+
+    @Test
+    public void testSendMail(){
+//        String to="fangmingxuan@aowu.tech";
+//        String subject="验证码";
+//        String content="<h1>您的验证码为:</h1> <h3>8876</h3>";
+//        mailService.sendHtmlMail(to,subject,content);
+        ResponseResult responseResult = loginService.sendResetPasswordMail("fangmingxuan11111@aowu.tech");
+        System.out.println((String) redisCache.getCacheObject("code:1"));
+//        ResponseResult responseResult1 = loginService.checkCode("66159", "fangmingxuan@aowu.tech");
+//        System.out.println((String) redisCache.getCacheObject("code:1"));
+
+
+    }
 
     @Test
     public void testUserMapper(){
