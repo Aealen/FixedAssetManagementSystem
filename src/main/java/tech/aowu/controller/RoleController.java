@@ -3,9 +3,8 @@ package tech.aowu.controller;
 import io.swagger.annotations.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import tech.aowu.entity.ResponseResult;
-import tech.aowu.entity.UmRole;
-import tech.aowu.entity.UmUserRole;
+import tech.aowu.entity.vo.ResponseResult;
+import tech.aowu.entity.po.UmUserRole;
 import tech.aowu.service.RoleService;
 
 import javax.annotation.Resource;

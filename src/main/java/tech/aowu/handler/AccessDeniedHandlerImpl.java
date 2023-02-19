@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
-import tech.aowu.entity.ResponseResult;
+import tech.aowu.entity.vo.ResponseResult;
 
 import tech.aowu.utils.WebUtils;
 

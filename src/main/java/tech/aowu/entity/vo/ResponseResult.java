@@ -1,4 +1,4 @@
-package tech.aowu.entity;
+package tech.aowu.entity.vo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

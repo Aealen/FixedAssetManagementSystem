@@ -1,8 +1,8 @@
 package tech.aowu.service.impl;
 
 import org.springframework.stereotype.Service;
-import tech.aowu.entity.ResponseResult;
-import tech.aowu.entity.UmRole;
+import tech.aowu.entity.vo.ResponseResult;
+import tech.aowu.entity.po.UmRole;
 import tech.aowu.entity.vo.UserView;
 import tech.aowu.mapper.RoleMapper;
 import tech.aowu.mapper.UserMapper;

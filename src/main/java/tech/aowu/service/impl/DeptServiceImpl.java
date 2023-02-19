@@ -1,10 +1,9 @@
 package tech.aowu.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.stereotype.Service;
-import tech.aowu.entity.FaDepartment;
-import tech.aowu.entity.ResponseResult;
-import tech.aowu.entity.UmUser;
+import tech.aowu.entity.po.FaDepartment;
+import tech.aowu.entity.vo.ResponseResult;
+import tech.aowu.entity.po.UmUser;
 import tech.aowu.entity.vo.QueryByPageParams;
 import tech.aowu.entity.vo.UserView;
 import tech.aowu.mapper.DeptMapper;

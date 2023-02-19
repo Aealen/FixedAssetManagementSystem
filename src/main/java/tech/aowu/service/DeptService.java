@@ -1,16 +1,8 @@
 package tech.aowu.service;
 
-import io.swagger.annotations.*;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import tech.aowu.entity.FaDepartment;
-import tech.aowu.entity.ResponseResult;
-import tech.aowu.entity.UmUserRole;
+import tech.aowu.entity.po.FaDepartment;
+import tech.aowu.entity.vo.ResponseResult;
 import tech.aowu.entity.vo.QueryByPageParams;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Description: TODO

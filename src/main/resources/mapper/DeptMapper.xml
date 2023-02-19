@@ -7,18 +7,18 @@
     <insert id="addDept">
         insert into fa_department (did,name,del_flag) values (null,#{name},0);
     </insert>
-    <update id="updateDeptById" parameterType="tech.aowu.entity.FaDepartment">
+    <update id="updateDeptById" parameterType="tech.aowu.entity.po.FaDepartment">
         update fa_department set name=#{name},del_flag=#{delFlag} where did=#{did};
     </update>
 
 
-    <select id="getAllDepts" resultType="tech.aowu.entity.FaDepartment">
+    <select id="getAllDepts" resultType="tech.aowu.entity.po.FaDepartment">
         select * from fa_department where del_flag=0 ;
     </select>
-    <select id="getDeptByDid" resultType="tech.aowu.entity.FaDepartment">
+    <select id="getDeptByDid" resultType="tech.aowu.entity.po.FaDepartment">
         select * from fa_department where did=#{did} AND del_flag=0;
     </select>
-    <select id="getAllDeptsByPage" resultType="tech.aowu.entity.FaDepartment">
+    <select id="getAllDeptsByPage" resultType="tech.aowu.entity.po.FaDepartment">
         select * from fa_department
         where del_flag=0
         <if test="keyword!=''">
@@ -30,7 +30,7 @@
         select count(*) from fa_department where del_flag=0 ;
 
     </select>
-    <select id="getDeptByName" resultType="tech.aowu.entity.FaDepartment">
+    <select id="getDeptByName" resultType="tech.aowu.entity.po.FaDepartment">
         select * from fa_department where name=#{name} AND del_flag=0;
     </select>
 </mapper>

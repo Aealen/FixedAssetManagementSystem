@@ -2,8 +2,8 @@ package tech.aowu.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import tech.aowu.entity.UmRole;
-import tech.aowu.entity.UmUserRole;
+import tech.aowu.entity.po.UmRole;
+import tech.aowu.entity.po.UmUserRole;
 
 import java.util.List;
 

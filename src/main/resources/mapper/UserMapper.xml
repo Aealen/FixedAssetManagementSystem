@@ -5,7 +5,7 @@
 
 <mapper namespace="tech.aowu.mapper.UserMapper">
 
-    <select id="getUmUserByUsername" resultType="tech.aowu.entity.UmUser" parameterType="String">
+    <select id="getUmUserByUsername" resultType="tech.aowu.entity.po.UmUser" parameterType="String">
         select * from um_user where username=#{username};
     </select>
 
@@ -48,7 +48,7 @@
     </update>
 
 
-    <insert id="regist" parameterType="tech.aowu.entity.UmUser"  useGeneratedKeys = "true"  keyProperty = "uid">
+    <insert id="regist" parameterType="tech.aowu.entity.po.UmUser" useGeneratedKeys = "true" keyProperty = "uid">
         insert into um_user
             (uid,nickname,username,password,department,del_flag,phone_num,email,reg_time,login_time)
         values

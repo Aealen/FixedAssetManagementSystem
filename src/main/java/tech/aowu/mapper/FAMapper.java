@@ -2,10 +2,9 @@ package tech.aowu.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import tech.aowu.entity.FaFixedasset;
-import tech.aowu.entity.FaType;
+import tech.aowu.entity.po.FaFixedasset;
+import tech.aowu.entity.po.FaType;
 import tech.aowu.entity.vo.FAView;
-import tech.aowu.entity.vo.UserView;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package tech.aowu.service;
 
-import tech.aowu.entity.ResponseResult;
+import tech.aowu.entity.vo.ResponseResult;
 
 /**
  * @Description: TODO

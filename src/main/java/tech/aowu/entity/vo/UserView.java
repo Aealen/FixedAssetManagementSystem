@@ -3,7 +3,7 @@ package tech.aowu.entity.vo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import tech.aowu.entity.UmUser;
+import tech.aowu.entity.po.UmUser;
 
 /**
  * @Description: 用户视图

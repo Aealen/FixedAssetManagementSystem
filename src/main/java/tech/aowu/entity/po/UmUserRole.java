@@ -1,4 +1,4 @@
-package tech.aowu.entity;
+package tech.aowu.entity.po;
 
 
 import com.baomidou.mybatisplus.annotation.TableId;

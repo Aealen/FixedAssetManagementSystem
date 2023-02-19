@@ -2,8 +2,7 @@ package tech.aowu.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import tech.aowu.entity.UmUser;
+import tech.aowu.entity.po.UmUser;
 import tech.aowu.entity.vo.CustodianView;
 import tech.aowu.entity.vo.UserView;
 

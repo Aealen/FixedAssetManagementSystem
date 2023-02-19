@@ -2,7 +2,7 @@ package tech.aowu.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import tech.aowu.entity.UmPermission;
+import tech.aowu.entity.po.UmPermission;
 
 import java.util.List;
 

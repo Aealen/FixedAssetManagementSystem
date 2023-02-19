@@ -3,9 +3,9 @@ package tech.aowu.controller;
 import io.swagger.annotations.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import tech.aowu.entity.FaFixedasset;
-import tech.aowu.entity.FaType;
-import tech.aowu.entity.ResponseResult;
+import tech.aowu.entity.po.FaFixedasset;
+import tech.aowu.entity.po.FaType;
+import tech.aowu.entity.vo.ResponseResult;
 import tech.aowu.entity.vo.QueryByPageParams;
 import tech.aowu.service.FAService;
 

@@ -1,18 +1,16 @@
 package tech.aowu.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import tech.aowu.entity.LoginUser;
-import tech.aowu.entity.ResponseResult;
-import tech.aowu.entity.UmUser;
+import tech.aowu.entity.vo.ResponseResult;
+import tech.aowu.entity.po.UmUser;
 import tech.aowu.entity.vo.UserView;
 import tech.aowu.mapper.RoleMapper;
 import tech.aowu.mapper.UserMapper;

@@ -1,8 +1,8 @@
 package tech.aowu.service;
 
-import tech.aowu.entity.FaFixedasset;
-import tech.aowu.entity.FaType;
-import tech.aowu.entity.ResponseResult;
+import tech.aowu.entity.po.FaFixedasset;
+import tech.aowu.entity.po.FaType;
+import tech.aowu.entity.vo.ResponseResult;
 import tech.aowu.entity.vo.QueryByPageParams;
 
 /**

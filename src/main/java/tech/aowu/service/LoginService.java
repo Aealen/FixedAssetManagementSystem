@@ -1,8 +1,8 @@
 package tech.aowu.service;
 
 
-import tech.aowu.entity.ResponseResult;
-import tech.aowu.entity.UmUser;
+import tech.aowu.entity.vo.ResponseResult;
+import tech.aowu.entity.po.UmUser;
 import tech.aowu.entity.vo.UserView;
 
 /**

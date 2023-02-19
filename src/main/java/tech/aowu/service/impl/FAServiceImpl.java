@@ -1,19 +1,15 @@
 package tech.aowu.service.impl;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Service;
-import tech.aowu.entity.FaFixedasset;
-import tech.aowu.entity.FaType;
-import tech.aowu.entity.ResponseResult;
+import tech.aowu.entity.po.FaFixedasset;
+import tech.aowu.entity.po.FaType;
+import tech.aowu.entity.vo.ResponseResult;
 import tech.aowu.entity.vo.FAView;
 import tech.aowu.entity.vo.QueryByPageParams;
-import tech.aowu.entity.vo.UserView;
 import tech.aowu.mapper.FAMapper;
 import tech.aowu.service.FAService;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 

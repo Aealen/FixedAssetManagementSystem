@@ -1,13 +1,11 @@
 package tech.aowu.controller;
 
 import io.swagger.annotations.*;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tech.aowu.entity.ResponseResult;
-import tech.aowu.entity.UmUser;
+import tech.aowu.entity.vo.ResponseResult;
+import tech.aowu.entity.po.UmUser;
 
-import tech.aowu.entity.vo.QueryByPageParams;
 import tech.aowu.entity.vo.UserView;
 import tech.aowu.service.LoginService;
 
