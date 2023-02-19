@@ -183,7 +183,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseResult changePwd(Long uid, String password) {
         String newPassword = passwordEncoder.encode(password);
-
         UmUser umUser = new UmUser();
         umUser.setUid(uid);
         umUser.setPassword(newPassword);

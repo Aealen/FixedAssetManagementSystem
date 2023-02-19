@@ -18,6 +18,16 @@ public interface DeptMapper extends BaseMapper<FaDepartment> {
    List<FaDepartment> getAllDepts();
 
    FaDepartment getDeptByDid(Long did);
+   FaDepartment getDeptByName(String name);
+
+
+
 
     List<FaDepartment> getAllDeptsByPage(String keyword, int currIndex, Integer perPage);
+
+    int getDeptCount();
+
+    int addDept(String name);
+
+    int updateDeptById(FaDepartment faDepartment);
 }

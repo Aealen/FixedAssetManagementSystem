@@ -5,6 +5,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import tech.aowu.entity.FaDepartment;
 import tech.aowu.entity.ResponseResult;
 import tech.aowu.entity.UmUserRole;
 import tech.aowu.entity.vo.QueryByPageParams;
@@ -25,4 +26,10 @@ public interface DeptService {
     ResponseResult setUserDept(Long uid, Long did);
 
     ResponseResult getAllDeptsByPage(QueryByPageParams params);
+
+    ResponseResult getDeptCount();
+
+    ResponseResult addDept(String name);
+
+    ResponseResult updateDeptInfo(FaDepartment faDepartment);
 }

@@ -143,6 +143,7 @@ public class FAServiceImpl implements FAService {
         //验证是否存在
         FaType typeByName = faMapper.getTypeByTid(typeObject.getTid());
         if (Objects.isNull(typeByName)){
+            //未找到
             return new ResponseResult(171,"类型不存在");
         }else {
             int i = faMapper.updateTypeInfo(typeObject);
