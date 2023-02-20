@@ -48,7 +48,11 @@ class FixedAssetManagementSystemApplicationTests {
 //        String subject="验证码";
 //        String content="<h1>您的验证码为:</h1> <h3>8876</h3>";
 //        mailService.sendHtmlMail(to,subject,content);
-        ResponseResult responseResult = loginService.sendResetPasswordMail("fangmingxuan11111@aowu.tech");
+        ResponseResult responseResult = loginService.sendResetPasswordMail("fangmingxuan@aowu.tech");
+
+        System.out.println(responseResult.getData());
+        System.out.println(responseResult.getMsg());
+
         System.out.println((String) redisCache.getCacheObject("code:1"));
 //        ResponseResult responseResult1 = loginService.checkCode("66159", "fangmingxuan@aowu.tech");
 //        System.out.println((String) redisCache.getCacheObject("code:1"));

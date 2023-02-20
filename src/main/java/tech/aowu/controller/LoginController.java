@@ -3,6 +3,7 @@ package tech.aowu.controller;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import tech.aowu.entity.vo.CodeCheckParams;
 import tech.aowu.entity.vo.ResponseResult;
 import tech.aowu.entity.po.UmUser;
 
@@ -67,6 +68,52 @@ public class LoginController {
     public ResponseResult regist(@RequestBody UserView user){
         return loginService.regist(user);
     }
+
+
+    @ApiOperation(value = "发送密码重置邮件",notes = "<span style='color:red;'>详细描述：</span>&nbsp;发送密码重置邮件")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "email", value = "邮箱", dataType = "String", defaultValue = "" ,paramType = "body")
+    })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "注册成功"),
+            @ApiResponse(code = 191, message = "无此邮箱匹配的用户"),
+            @ApiResponse(code = 192, message = "5分钟内不要重复发送密码重置邮件!")
+    })
+    @PostMapping("/user/auth/sendResetPasswordMail")
+    public ResponseResult sendResetPasswordMail(@RequestBody CodeCheckParams params){
+        return loginService.sendResetPasswordMail(params.getEmail());
+    }
+    @ApiOperation(value = "发送密码重置邮件",notes = "<span style='color:red;'>详细描述：</span>&nbsp;发送密码重置邮件")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "code", value = "验证码", dataType = "String", defaultValue = "" ,paramType = "body"),
+            @ApiImplicitParam(name = "email", value = "邮箱", dataType = "String", defaultValue = "" ,paramType = "body")
+    })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "注册成功"),
+            @ApiResponse(code = 191, message = "无此邮箱匹配的用户"),
+            @ApiResponse(code = 192, message = "5分钟内不要重复发送密码重置邮件!")
+    })
+    @PostMapping("/user/auth/checkCode")
+    public ResponseResult checkCode(@RequestBody CodeCheckParams params){
+        return loginService.checkCode(params.getCode(),params.getEmail());
+    }
+
+
+    @ApiOperation(value = "修改密码",notes = "<span style='color:red;'>详细描述：</span>&nbsp;修改密码")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "uid", value = "验证码", dataType = "String", defaultValue = "" ,paramType = "body"),
+            @ApiImplicitParam(name = "password", value = "邮箱", dataType = "String", defaultValue = "" ,paramType = "body")
+    })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "注册成功"),
+            @ApiResponse(code = 191, message = "无此邮箱匹配的用户"),
+            @ApiResponse(code = 192, message = "5分钟内不要重复发送密码重置邮件!")
+    })
+    @PostMapping("/user/auth/changePwd")
+    public ResponseResult changePwd(@RequestBody UmUser user){
+        return loginService.changePwd(user.getEmail(),user.getPassword());
+    }
+
 
 
 

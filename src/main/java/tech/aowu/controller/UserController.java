@@ -3,8 +3,10 @@ package tech.aowu.controller;
 import io.swagger.annotations.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import tech.aowu.entity.po.UmUser;
 import tech.aowu.entity.vo.ResponseResult;
 import tech.aowu.entity.vo.QueryByPageParams;
+import tech.aowu.entity.vo.UserView;
 import tech.aowu.service.UserService;
 
 import javax.annotation.Resource;
@@ -101,6 +103,21 @@ public class UserController {
     public ResponseResult resetUserPassword(@PathVariable Long uid){
 
         return userService.resetUserPassword(uid);
+    }
+
+    @ApiOperation(value = "修改用户密码",notes = "<span style='color:red;'>详细描述：</span>&nbsp;修改用户密码")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "uid", value = "1", dataType = "Long", defaultValue = "" ,paramType = "body"),
+            @ApiImplicitParam(name = "password", value = "1", dataType = "Long", defaultValue = "" ,paramType = "body"),
+    })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "成功"),
+            @ApiResponse(code = 103, message = "用户不存在"),
+            @ApiResponse(code = 150, message = "数据库操作异常")
+    })
+    @PostMapping("/user/changePwd")
+    public ResponseResult changePwd(@RequestBody UmUser user){
+        return userService.changePwd(user.getUid(),user.getPassword());
     }
 
     @ApiOperation(value = "删除用户",notes = "<span style='color:red;'>详细描述：</span>&nbsp;删除用户")

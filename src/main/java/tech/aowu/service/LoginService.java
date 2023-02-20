@@ -21,4 +21,7 @@ public interface LoginService {
     ResponseResult sendResetPasswordMail(String to);
 
     ResponseResult checkCode(String code, String to);
+
+    ResponseResult changePwd(String email, String password);
+
 }

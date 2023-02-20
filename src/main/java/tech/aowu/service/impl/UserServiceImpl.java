@@ -2,6 +2,7 @@ package tech.aowu.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -156,6 +157,17 @@ public class UserServiceImpl implements UserService {
     @Transactional  //由于有多个操作同时进行可能会有单一操作失败 所以加回滚
     public ResponseResult updateByUid(UserView userView) {
 
+        //判断邮箱是否重复
+        QueryWrapper<UmUser> umUserQueryWrapper = new QueryWrapper<>();
+        umUserQueryWrapper.eq("email",userView.getEmail());
+        UmUser userByEmail = userMapper.selectOne(umUserQueryWrapper);
+        if (Objects.nonNull(userByEmail)){
+            //非空  此邮箱已被使用
+            //新旧邮箱若一致 且用户id不一致则报错
+            if (userByEmail.getEmail()==userView.getEmail()&&userByEmail.getUid()!=userView.getId())
+                return new ResponseResult(195,"邮箱已被使用!");
+        }
+
         //修改role
         int changeRole = roleMapper.updateById(new UmUserRole(userView.getId(), userView.getRoleId()));
         if (changeRole==0){
@@ -206,6 +218,16 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public ResponseResult changeEmail(Long uid, String email) {
+
+        //判断邮箱是否重复
+        QueryWrapper<UmUser> umUserQueryWrapper = new QueryWrapper<>();
+        umUserQueryWrapper.eq("email",email);
+        UmUser userByEmail = userMapper.selectOne(umUserQueryWrapper);
+        if (Objects.nonNull(userByEmail)){
+            //非空  此邮箱已被使用
+            return new ResponseResult(195,"邮箱已被使用!");
+        }
+
 
         UmUser umUser = new UmUser();
         umUser.setUid(uid);

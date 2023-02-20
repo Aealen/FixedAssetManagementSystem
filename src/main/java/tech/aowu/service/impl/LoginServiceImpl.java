@@ -123,9 +123,17 @@ public class LoginServiceImpl implements LoginService {
 //        queryWrapper.eq("username",userView.getUsername());
 //        UmUser queryUser = userMapper.selectOne(queryWrapper);
 
-        UmUser queryUser = userMapper.getUmUserByUsername(userView.getUsername());
-        if(Objects.nonNull(queryUser)){
+        UmUser queryUserByEmail = userMapper.getUmUserByUsername(userView.getUsername());
+        if(Objects.nonNull(queryUserByEmail)){
             return new ResponseResult(102,"用户已存在");
+        }
+        //判断邮箱是否重复
+        QueryWrapper<UmUser> umUserQueryWrapper = new QueryWrapper<>();
+        umUserQueryWrapper.eq("email",userView.getEmail());
+        UmUser userByEmail = userMapper.selectOne(umUserQueryWrapper);
+        if (Objects.nonNull(userByEmail)){
+            //非空  此邮箱已被使用
+            return new ResponseResult(195,"邮箱已被使用!");
         }
 
         UmUser umUser = userView.setUmUser();
@@ -151,7 +159,6 @@ public class LoginServiceImpl implements LoginService {
      */
     @Override
     public ResponseResult sendResetPasswordMail(String to) {
-
         //根据邮箱获取用户
         QueryWrapper<UmUser> umUserQueryWrapper = new QueryWrapper<>();
         umUserQueryWrapper.eq("email",to);
@@ -159,6 +166,14 @@ public class LoginServiceImpl implements LoginService {
         UmUser umUser = userMapper.selectOne(umUserQueryWrapper);
         if (Objects.isNull(umUser)){
             return new ResponseResult(191,"无此邮箱匹配的用户");
+        }
+
+        //检查是否已经发送过验证码  5min
+        String isSended = redisCache.getCacheObject("code:" + umUser.getUid());
+        if (isSended==null||isSended.isEmpty()||isSended.isBlank()){
+            //没找到  则 五分钟内未发送
+        }else {
+            return new ResponseResult(192,"5分钟内不要重复发送密码重置邮件!");
         }
 
         //产生五位随机数字
@@ -194,17 +209,58 @@ public class LoginServiceImpl implements LoginService {
             return new ResponseResult(191,"无此邮箱匹配的用户");
         }
 
+        //检查是否已经发送过验证码  5min
+        String isSended = redisCache.getCacheObject("code:" + umUser.getUid());
+        if (isSended==null||isSended.isEmpty()||isSended.isBlank()){
+            //没找到  则 超时
+            return new ResponseResult(193,"验证码超时,请重新发送!");
+        }
+
+
+
         String codeInRedis = redisCache.getCacheObject("code:" + umUser.getUid());
 
         if (code.equals(codeInRedis)){
-            //删除redis中存的验证码
+            // 销毁redis中存的验证码
             redisCache.deleteObject("code:" + umUser.getUid());
-            return new ResponseResult(200, "true");
+            return new ResponseResult(200, "success");
         }else {
-            return new ResponseResult(107,"验证码错误");
+            return new ResponseResult(194,"验证码错误");
         }
 
     }
 
+    /**
+     * 改密
+     * @param email
+     * @param password
+     * @return
+     */
+    @Override
+    public ResponseResult changePwd(String email, String password) {
+
+        //根据邮箱获取用户
+
+        QueryWrapper<UmUser> umUserQueryWrapper = new QueryWrapper<>();
+        umUserQueryWrapper.eq("email",email);
+        UmUser userByEmail = userMapper.selectOne(umUserQueryWrapper);
+        if (Objects.isNull(userByEmail)){
+            //为空
+            return new ResponseResult(191,"无此邮箱匹配的用户");
+        }
+
+        //改密
+        String newPassword = passwordEncoder.encode(password);
+        UmUser umUser = new UmUser();
+        umUser.setUid(userByEmail.getUid());
+        umUser.setPassword(newPassword);
+        int res = userMapper.updateById(umUser);
+
+//        int i = userMapper.changeuserPwd(uid, newPassword);
+        if (res==0){
+            return new ResponseResult(150,"数据库操作异常!请尽快联系系统管理员!");
+        }
+        return new ResponseResult(200,"密码修改成功!");
+    }
 }
 
