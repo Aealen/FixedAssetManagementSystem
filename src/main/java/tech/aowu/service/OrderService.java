@@ -10,5 +10,15 @@ import tech.aowu.entity.vo.ResponseResult;
  * @Date: 2023/2/25 13:53
  */
 public interface OrderService {
+
+
+    ResponseResult getCount();
+
     ResponseResult queryByPage(QueryByPageParams params);
+
+    ResponseResult getOrderByID(Long id);
+
+    ResponseResult delOrder(Long id);
+
+    ResponseResult updateOrderStatus(Long id, Long status);
 }

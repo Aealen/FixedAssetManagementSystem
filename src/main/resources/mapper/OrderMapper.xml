@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="tech.aowu.mapper.OrderMapper">
+    <update id="updateOrderStatus">
+        update `order` set status=#{status} where oid =#{id};
+    </update>
+    <delete id="delOrder">
+        update `order` set del_flag=1 where oid=#{id};
+    </delete>
+
+    <select id="getCount" resultType="java.lang.Integer">
+        select  count(*) from orders;
+    </select>
+    <select id="getOrderByPage" resultType="tech.aowu.entity.vo.OrderView">
+        select * from orders
+        <if test="keyword!=''">
+            where order_desc like CONCAT('%',#{keyword},'%')
+        </if>
+        limit #{currIndex},#{perPage}
+
+    </select>
+    <select id="getOrderByID" resultType="tech.aowu.entity.vo.OrderView">
+        select * from orders
+        where id=#{id}
+    </select>
+</mapper>
