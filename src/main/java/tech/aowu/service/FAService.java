@@ -28,4 +28,8 @@ public interface FAService {
 
     ResponseResult addType(String typename);
     ResponseResult updateTypeInfo(FaType faType);
+
+    ResponseResult queryFaByPageByID(Long id);
+
+    ResponseResult updatefa(FaFixedasset faFixedasset);
 }

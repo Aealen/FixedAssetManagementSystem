@@ -10,6 +10,7 @@ import tech.aowu.entity.vo.QueryByPageParams;
 import tech.aowu.service.FAService;
 
 import javax.annotation.Resource;
+import javax.annotation.security.PermitAll;
 
 /**
  * @Description: TODO
@@ -42,16 +43,32 @@ public class FAController {
     public ResponseResult queryFaByPage(@RequestBody QueryByPageParams params){
         return faService.queryFaByPage(params);
     }
-
-    @ApiOperation(value = "分页查询固定资产",notes = "<span style='color:red;'>详细描述：</span>&nbsp;分页查询用户")
+    @ApiOperation(value = "根据ID查询",notes = "<span style='color:red;'>详细描述：</span>&nbsp;根据ID查询")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "keyword", value = "关键字", dataType = "String", defaultValue = "" ,paramType = "body"),
-            @ApiImplicitParam(name = "page", value = "页码", dataType = "String", defaultValue = "",paramType = "body"),
-            @ApiImplicitParam(name = "perPage", value = "每页数量", dataType = "String", defaultValue = "",paramType = "body")
+            @ApiImplicitParam(name = "id", value = "ID", dataType = "String", defaultValue = "" ,paramType = "path")
     })
+//    @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:custodian','system:user:worker','system:user:reporter')")
+    @PermitAll
+    @PostMapping("/updatefa")
+    public ResponseResult updatefa(@RequestBody FaFixedasset faFixedasset){
+        return faService.updatefa(faFixedasset);
+    }
+    @ApiOperation(value = "修改资产信息",notes = "<span style='color:red;'>详细描述：</span>&nbsp;修改资产信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "ID", dataType = "String", defaultValue = "" ,paramType = "path")
+    })
+//    @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:custodian','system:user:worker','system:user:reporter')")
+    @PermitAll
+    @PostMapping("/queryFaByID/{id}")
+    public ResponseResult queryFaByPageByID(@PathVariable(value = "id") Long params){
+        return faService.queryFaByPageByID(params);
+    }
+
+
+
+    @ApiOperation(value = "固定资产总数",notes = "<span style='color:red;'>详细描述：</span>&nbsp;固定资产总数")
     @ApiResponses({
             @ApiResponse(code = 150, message = "数据库操作异常")
-
     })
     @PreAuthorize("hasAuthority('system:user:admin')")
     @GetMapping("/getFaCount")
@@ -99,7 +116,8 @@ public class FAController {
     @ApiResponses({
             @ApiResponse(code = 150, message = "数据库操作异常")
     })
-    @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:custodian')")
+//    @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:custodian')")
+    @PermitAll
     @GetMapping("/getAllType")
     public ResponseResult getAllType(){
         return faService.getAllType();

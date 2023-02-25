@@ -47,4 +47,8 @@
     <select id="getTypeByTid" resultType="tech.aowu.entity.po.FaType">
         select * from fa_type where del_flag=0 AND tid=#{tid};
     </select>
+    <select id="getFaByID" resultType="tech.aowu.entity.vo.FAView">
+        select * from fixedassets
+        where id=#{id};
+    </select>
 </mapper>

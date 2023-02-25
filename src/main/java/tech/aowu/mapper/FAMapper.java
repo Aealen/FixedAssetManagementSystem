@@ -18,12 +18,12 @@ import java.util.List;
 public interface FAMapper extends BaseMapper<FaFixedasset> {
 
     List<FAView> getFaByPage(String keyword, int currIndex, Integer pageSize);
-
+    FAView getFaByID(Long id);
 
     int getFaCount();
 
-    int delFaByFid(Long fid);
 
+    int delFaByFid(Long fid);
 
     // Type Ref
     List<FaType> getAllFaType();

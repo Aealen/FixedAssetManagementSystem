@@ -36,6 +36,33 @@ public class FAServiceImpl implements FAService {
 
     }
 
+    //根据ID查询
+    @Override
+    public ResponseResult queryFaByPageByID(Long id) {
+        FAView faByID = faMapper.getFaByID(id);
+        if (Objects.isNull(faByID)){
+            return new ResponseResult(180,"无此固定资产信息");
+        }
+        return new ResponseResult(200,"success",faByID);
+    }
+
+    @Override
+    public ResponseResult updatefa(FaFixedasset faFixedasset) {
+
+        //判断是否存在此资产
+        ResponseResult responseResult = queryFaByPageByID(faFixedasset.getFid());
+        if (responseResult.getCode()!=200){
+            //不存在
+            return new ResponseResult(180,"无此固定资产信息");
+        }
+        //更新
+        int i = faMapper.updateById(faFixedasset);
+        if (i==0){
+            return new ResponseResult(150,"数据库操作异常!请尽快联系系统管理员!");
+        }
+        return new ResponseResult(200,"success");
+    }
+
     @Override
     public ResponseResult getFaCount() {
 
