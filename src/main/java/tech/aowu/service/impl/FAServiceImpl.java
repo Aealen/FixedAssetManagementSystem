@@ -3,6 +3,7 @@ package tech.aowu.service.impl;
 import org.springframework.stereotype.Service;
 import tech.aowu.entity.po.FaFixedasset;
 import tech.aowu.entity.po.FaType;
+import tech.aowu.entity.vo.FAQueryParams;
 import tech.aowu.entity.vo.ResponseResult;
 import tech.aowu.entity.vo.FAView;
 import tech.aowu.entity.vo.QueryByPageParams;
@@ -61,6 +62,21 @@ public class FAServiceImpl implements FAService {
             return new ResponseResult(150,"数据库操作异常!请尽快联系系统管理员!");
         }
         return new ResponseResult(200,"success");
+    }
+
+    @Override
+    public ResponseResult queryFaByTDID(FAQueryParams params) {
+
+        if (params.getTid()==null){
+            params.setTid(0L);
+        }
+        if (params.getDid()==null){
+            params.setDid(0L);
+        }
+
+        //根据tid和did查询
+        List<FAView> faByTDID = faMapper.getFaByTDID(params.getTid(), params.getDid());
+        return new ResponseResult(200, "success",faByTDID);
     }
 
     @Override

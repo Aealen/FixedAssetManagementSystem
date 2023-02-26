@@ -23,6 +23,19 @@
         </if>
         limit #{currIndex},#{pageSize}
     </select>
+
+    <select id="getFaByTDID" resultType="tech.aowu.entity.vo.FAView">
+        select * from fixedassets where 1=1
+        <if test="tid!=0">
+            AND fa_tid =#{tid}
+        </if>
+        <if test="did!=0">
+            AND fa_did =#{did}
+        </if>
+        ;
+    </select>
+
+
     <select id="getFaCount" resultType="java.lang.Integer">
         select count(*) from fixedassets;
     </select>
@@ -51,4 +64,5 @@
         select * from fixedassets
         where id=#{id};
     </select>
+
 </mapper>

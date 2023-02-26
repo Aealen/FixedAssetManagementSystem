@@ -26,4 +26,23 @@
         select * from orders
         where id=#{id}
     </select>
+    <select id="getCountForCustodian" resultType="java.lang.Integer">
+        select count(*) from orders where order_custodian_id =#{uid}
+    </select>
+    <select id="getOrderByPageAndRole" resultType="tech.aowu.entity.vo.OrderView">
+        select * from orders where 1=1
+        <if test="keyword!=''">
+            AND order_desc like CONCAT('%',#{keyword},'%')
+        </if>
+        <if test="rid==2">
+            AND order_reporter_id=#{uid}
+        </if>
+        <if test="rid==3">
+            AND order_worker=#{uid}
+        </if>
+        <if test="rid==4">
+            AND order_custodian_id=#{uid}
+        </if>
+        limit #{currIndex},#{perPage}
+    </select>
 </mapper>

@@ -1,5 +1,6 @@
 package tech.aowu.service;
 
+import tech.aowu.entity.po.Order;
 import tech.aowu.entity.vo.QueryByPageParams;
 import tech.aowu.entity.vo.ResponseResult;
 
@@ -21,4 +22,10 @@ public interface OrderService {
     ResponseResult delOrder(Long id);
 
     ResponseResult updateOrderStatus(Long id, Long status);
+
+    ResponseResult addOrder(Order order);
+
+    ResponseResult getCountByRole(Long rid,Long uid);
+
+    ResponseResult getOrderByPageAndRole(QueryByPageParams params);
 }

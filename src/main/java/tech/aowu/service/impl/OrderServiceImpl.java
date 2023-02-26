@@ -1,5 +1,6 @@
 package tech.aowu.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.stereotype.Service;
 import tech.aowu.entity.po.Order;
 import tech.aowu.entity.vo.OrderView;
@@ -10,6 +11,8 @@ import tech.aowu.mapper.OrderMapper;
 import tech.aowu.service.OrderService;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Objects;
 
@@ -42,6 +45,29 @@ public class OrderServiceImpl implements OrderService {
         return new ResponseResult(150,"数据库操作异常!请尽快联系系统管理员!");
     }
 
+    @Override
+    public ResponseResult getCountByRole(Long rid,Long uid) {
+        QueryWrapper<Order> orderQueryWrapper = new QueryWrapper<>();
+        orderQueryWrapper.eq("del_flag",0);
+
+        Integer integer=null;
+        if (rid==2){
+            //报修员
+            orderQueryWrapper.eq("reporter",uid);
+            integer= orderMapper.selectCount(orderQueryWrapper);
+
+        }else if (rid==3){
+            //工人
+            orderQueryWrapper.eq("worker",uid);
+            integer= orderMapper.selectCount(orderQueryWrapper);
+
+        }else if (rid==4){//负责人
+            integer = orderMapper.getCountForCustodian(uid);
+        }
+        return new ResponseResult(200,integer);
+
+    }
+
     /**
      * 分页查询
      * @param params
@@ -59,6 +85,24 @@ public class OrderServiceImpl implements OrderService {
         }
         return new ResponseResult(200,"查询成功",orderByPage);
 
+    }
+
+
+    @Override
+    public ResponseResult getOrderByPageAndRole(QueryByPageParams params) {
+        if (params.getKeyword()==null||params.getKeyword().isEmpty()){
+            params.setKeyword("");
+        }
+        int currIndex=(params.getPage()-1)*params.getPerPage();
+        List<OrderView> orderByPage=null;
+
+        //开始根据rid和uid分组
+
+        orderByPage= orderMapper.getOrderByPageAndRole(params.getKeyword(),currIndex, params.getPerPage(),params.getRid(),params.getUid());
+        if (Objects.isNull(orderByPage.get(0))){
+            return new ResponseResult(150,"数据库操作异常!请尽快联系系统管理员!");
+        }
+        return new ResponseResult(200,"查询成功",orderByPage);
     }
 
     /**
@@ -99,6 +143,28 @@ public class OrderServiceImpl implements OrderService {
 
         return new ResponseResult(200, "success");
     }
+
+    /**
+     * 新增订单
+     * @param order
+     * @return
+     */
+    @Override
+    public ResponseResult addOrder(Order order) {
+        //只传进了描述  reporterId 和资产id
+        //还需要 status del_flag 和 up_time
+
+        order.setStatus(0);
+        order.setDelFlag(0);
+        order.setUpTime(new Timestamp(System.currentTimeMillis()));
+
+        int insert = orderMapper.insert(order);
+        if (insert<1){
+            return new ResponseResult(150,"数据库操作异常!请尽快联系系统管理员!");
+        }
+        return new ResponseResult(200, "success");
+    }
+
     /**
      * 根据ID修改订单状态
      * @param id

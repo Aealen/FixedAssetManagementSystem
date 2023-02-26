@@ -5,6 +5,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import tech.aowu.entity.po.FaFixedasset;
 import tech.aowu.entity.po.FaType;
+import tech.aowu.entity.vo.FAQueryParams;
 import tech.aowu.entity.vo.ResponseResult;
 import tech.aowu.entity.vo.QueryByPageParams;
 import tech.aowu.service.FAService;
@@ -43,7 +44,8 @@ public class FAController {
     public ResponseResult queryFaByPage(@RequestBody QueryByPageParams params){
         return faService.queryFaByPage(params);
     }
-    @ApiOperation(value = "根据ID查询",notes = "<span style='color:red;'>详细描述：</span>&nbsp;根据ID查询")
+
+    @ApiOperation(value = "修改资产信息",notes = "<span style='color:red;'>详细描述：</span>&nbsp;根据ID查询")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "ID", dataType = "String", defaultValue = "" ,paramType = "path")
     })
@@ -53,7 +55,9 @@ public class FAController {
     public ResponseResult updatefa(@RequestBody FaFixedasset faFixedasset){
         return faService.updatefa(faFixedasset);
     }
-    @ApiOperation(value = "修改资产信息",notes = "<span style='color:red;'>详细描述：</span>&nbsp;修改资产信息")
+
+
+    @ApiOperation(value = "根据ID查询",notes = "<span style='color:red;'>详细描述：</span>&nbsp;修改资产信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "ID", dataType = "String", defaultValue = "" ,paramType = "path")
     })
@@ -63,6 +67,19 @@ public class FAController {
     public ResponseResult queryFaByPageByID(@PathVariable(value = "id") Long params){
         return faService.queryFaByPageByID(params);
     }
+    @ApiOperation(value = "根据类型和部门查询资产",notes = "<span style='color:red;'>详细描述：</span>&nbsp;根据类型和部门查询资产")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tid", value = "tID", dataType = "String", defaultValue = "" ,paramType = "body"),
+            @ApiImplicitParam(name = "did", value = "dID", dataType = "String", defaultValue = "" ,paramType = "body")
+    })
+//    @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:custodian','system:user:worker','system:user:reporter')")
+    @PermitAll
+    @PostMapping("/queryFaByTDID")
+    public ResponseResult queryFaByTDID(@RequestBody FAQueryParams params){
+        return faService.queryFaByTDID(params);
+    }
+
+
 
 
 

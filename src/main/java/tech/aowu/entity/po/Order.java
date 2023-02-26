@@ -1,6 +1,7 @@
 package tech.aowu.entity.po;
 
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -9,18 +10,19 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 
-@TableName("order")
+@TableName("`order`")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class Order {
-  @TableId
+  @TableId(type = IdType.AUTO)
   private Long oid;
   private String description;
   private long fa;
   private Long status;
   private long reporter;
   private Integer delFlag;
+  private Long worker;
   private java.sql.Timestamp upTime;
 
 

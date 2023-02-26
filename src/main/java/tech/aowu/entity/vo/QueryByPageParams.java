@@ -19,5 +19,7 @@ public class QueryByPageParams {
     private String keyword;
     private Integer page;
     private Integer perPage;
+    private Long rid;
+    private Long uid;
 
 }

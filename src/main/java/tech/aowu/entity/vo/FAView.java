@@ -21,7 +21,7 @@ public class FAView {
     private Double faPrice;
     private Long faTid;
     private String faTypeName;
-    private String faDid;
+    private Long faDid;
     private String faDeptName;
     private Long faCustodianId;
     private String faCustodian;

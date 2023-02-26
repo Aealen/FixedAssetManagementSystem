@@ -2,6 +2,7 @@ package tech.aowu.service;
 
 import tech.aowu.entity.po.FaFixedasset;
 import tech.aowu.entity.po.FaType;
+import tech.aowu.entity.vo.FAQueryParams;
 import tech.aowu.entity.vo.ResponseResult;
 import tech.aowu.entity.vo.QueryByPageParams;
 
@@ -32,4 +33,6 @@ public interface FAService {
     ResponseResult queryFaByPageByID(Long id);
 
     ResponseResult updatefa(FaFixedasset faFixedasset);
+
+    ResponseResult queryFaByTDID(FAQueryParams params);
 }

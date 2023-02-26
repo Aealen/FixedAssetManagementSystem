@@ -25,6 +25,8 @@ public class OrderView {
     private String faModel;
     private Double faPrice;
     private Long faDid;
+    private Long orderWorker;
+    private String orderWorkerNickname;
     private String faDeptName;
     private Long orderCustodianId;
     private String orderCustodian;
