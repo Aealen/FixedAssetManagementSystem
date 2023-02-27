@@ -3,16 +3,19 @@ package tech.aowu.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.stereotype.Service;
 import tech.aowu.entity.po.Order;
+import tech.aowu.entity.po.UmUser;
 import tech.aowu.entity.vo.OrderView;
 import tech.aowu.entity.vo.QueryByPageParams;
 import tech.aowu.entity.vo.ResponseResult;
 import tech.aowu.entity.vo.UserView;
 import tech.aowu.mapper.OrderMapper;
+import tech.aowu.mapper.UserMapper;
 import tech.aowu.service.OrderService;
 
 import javax.annotation.Resource;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -28,6 +31,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Resource
     private OrderMapper orderMapper;
+
+    @Resource
+    private UserMapper userMapper;
 
 
 
@@ -105,6 +111,15 @@ public class OrderServiceImpl implements OrderService {
         return new ResponseResult(200,"查询成功",orderByPage);
     }
 
+    @Override
+    public ResponseResult getWorker(Long did) {
+
+
+        List<UserView> workers= userMapper.getWorker(did);
+
+        return new ResponseResult(200,"success" ,workers);
+    }
+
     /**
      * 根据ID查询
      * @param id
@@ -156,6 +171,7 @@ public class OrderServiceImpl implements OrderService {
 
         order.setStatus(0);
         order.setDelFlag(0);
+
         order.setUpTime(new Timestamp(System.currentTimeMillis()));
 
         int insert = orderMapper.insert(order);

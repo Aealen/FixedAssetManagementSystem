@@ -60,6 +60,16 @@ public class OrderController {
         return orderService.addOrder(order);
     }
 
+    @ApiOperation(value = "根据部门查询worker",notes = "<span style='color:red;'>详细描述：</span>&nbsp;根据部门查询worker")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "did", value = "关键字", dataType = "Long", defaultValue = "" ,paramType = "path")
+    })
+    @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:reporter')")
+    @PostMapping("/getWorker/{did}")
+    public ResponseResult getWorker(@PathVariable Long did){
+        return orderService.getWorker(did);
+    }
+
     @ApiOperation(value = "获取订单数量",notes = "<span style='color:red;'>详细描述：</span>&nbsp;获取订单数量")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "keyword", value = "关键字", dataType = "String", defaultValue = "" ,paramType = "body"),

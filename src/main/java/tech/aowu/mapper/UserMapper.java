@@ -80,4 +80,6 @@ public interface UserMapper extends BaseMapper<UmUser> {
 
 
     List<CustodianView> getAllCustodian();
+
+    List<UserView> getWorker(Long did);
 }

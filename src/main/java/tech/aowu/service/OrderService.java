@@ -28,4 +28,6 @@ public interface OrderService {
     ResponseResult getCountByRole(Long rid,Long uid);
 
     ResponseResult getOrderByPageAndRole(QueryByPageParams params);
+
+    ResponseResult getWorker(Long did);
 }
