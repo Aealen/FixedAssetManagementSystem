@@ -22,6 +22,21 @@
         limit #{currIndex},#{perPage}
 
     </select>
+
+    <select id="queryByPageForCustodian" resultType="tech.aowu.entity.vo.OrderView">
+        select * from orders
+        where order_status=3
+        <if test="did!=0">
+            AND fa_did=#{did}
+        </if>
+        <if test="keyword!=''">
+            AND order_desc like CONCAT('%',#{keyword},'%')
+        </if>
+        limit #{currIndex},#{perPage}
+    </select>
+
+
+
     <select id="getOrderByID" resultType="tech.aowu.entity.vo.OrderView">
         select * from orders
         where id=#{id}

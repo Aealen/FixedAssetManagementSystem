@@ -30,4 +30,6 @@ public interface OrderService {
     ResponseResult getOrderByPageAndRole(QueryByPageParams params);
 
     ResponseResult getWorker(Long did);
+
+    ResponseResult queryByPageForCustodian(QueryByPageParams params);
 }

@@ -28,4 +28,6 @@ public interface OrderMapper extends BaseMapper<Order> {
     int delOrder(Long id);
 
     List<OrderView> getOrderByPageAndRole(String keyword, int currIndex, Integer perPage, Long rid, Long uid);
+
+    List<OrderView> queryByPageForCustodian(String keyword, int currIndex, Integer perPage, Long did);
 }

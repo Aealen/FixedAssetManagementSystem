@@ -93,6 +93,20 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
+    @Override
+    public ResponseResult queryByPageForCustodian(QueryByPageParams params) {
+        if (params.getKeyword()==null||params.getKeyword().isEmpty()){
+            params.setKeyword("");
+        }
+        int currIndex=(params.getPage()-1)*params.getPerPage();
+        //传入的UID获取 所属部门 did
+        Long uid = userMapper.selectOne(new QueryWrapper<UmUser>().eq("uid", params.getUid())).getDepartment();
+
+        System.out.println(uid);
+        List<OrderView> orderByPage = orderMapper.queryByPageForCustodian(params.getKeyword(),currIndex, params.getPerPage(), uid);
+
+        return new ResponseResult(200,"查询成功",orderByPage);
+    }
 
     @Override
     public ResponseResult getOrderByPageAndRole(QueryByPageParams params) {
@@ -169,7 +183,7 @@ public class OrderServiceImpl implements OrderService {
         //只传进了描述  reporterId 和资产id
         //还需要 status del_flag 和 up_time
 
-        order.setStatus(0);
+        order.setStatus(3); //3 未审核
         order.setDelFlag(0);
 
         order.setUpTime(new Timestamp(System.currentTimeMillis()));

@@ -30,10 +30,21 @@ public class OrderController {
             @ApiImplicitParam(name = "page", value = "页码", dataType = "String", defaultValue = "",paramType = "body"),
             @ApiImplicitParam(name = "perPage", value = "每页数量", dataType = "String", defaultValue = "",paramType = "body")
     })
-    @PreAuthorize("hasAuthority('system:user:admin')")
+    @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:custodian')")
     @PostMapping("/queryByPage")
     public ResponseResult queryByPage(@RequestBody QueryByPageParams params){
         return orderService.queryByPage(params);
+    }
+    @ApiOperation(value = "分页查询未审核订单信息",notes = "<span style='color:red;'>详细描述：</span>&nbsp;分页查询未审核订单信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "keyword", value = "关键字", dataType = "String", defaultValue = "" ,paramType = "body"),
+            @ApiImplicitParam(name = "page", value = "页码", dataType = "String", defaultValue = "",paramType = "body"),
+            @ApiImplicitParam(name = "perPage", value = "每页数量", dataType = "String", defaultValue = "",paramType = "body")
+    })
+    @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:custodian')")
+    @PostMapping("/queryByPageForCustodian")
+    public ResponseResult queryByPageForCustodian(@RequestBody QueryByPageParams params){
+        return orderService.queryByPageForCustodian(params);
     }
     @ApiOperation(value = "分页查询订单信息（根据角色和id）",notes = "<span style='color:red;'>详细描述：</span>&nbsp;分页查询订单信息（根据角色和id）")
     @ApiImplicitParams({
@@ -76,7 +87,7 @@ public class OrderController {
             @ApiImplicitParam(name = "page", value = "页码", dataType = "String", defaultValue = "",paramType = "body"),
             @ApiImplicitParam(name = "perPage", value = "每页数量", dataType = "String", defaultValue = "",paramType = "body")
     })
-    @PreAuthorize("hasAuthority('system:user:admin')")
+    @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:custodian')")
     @GetMapping("/getCount")
     public ResponseResult getCount(){
         return orderService.getCount();
@@ -94,7 +105,7 @@ public class OrderController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "ID", dataType = "String", defaultValue = "" ,paramType = "path")
     })
-    @PreAuthorize("hasAuthority('system:user:admin')")
+    @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:reporter','system:user:worker','system:user:custodian')")
     @GetMapping("/getOrderByID/{id}")
     public ResponseResult getOrderByID(@PathVariable Long id){
         return orderService.getOrderByID(id);
@@ -105,7 +116,7 @@ public class OrderController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "ID", dataType = "String", defaultValue = "" ,paramType = "path")
     })
-    @PreAuthorize("hasAuthority('system:user:admin')")
+    @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:reporter','system:user:worker','system:user:custodian')")
     @GetMapping("/del/{id}")
     public ResponseResult delOrder(@PathVariable Long id){
         return orderService.delOrder(id);
@@ -116,7 +127,7 @@ public class OrderController {
             @ApiImplicitParam(name = "id", value = "ID", dataType = "String", defaultValue = "" ,paramType = "path"),
             @ApiImplicitParam(name = "status", value = "status", dataType = "String", defaultValue = "" ,paramType = "path")
     })
-    @PreAuthorize("hasAuthority('system:user:admin')")
+    @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:reporter','system:user:worker','system:user:custodian')")
     @GetMapping("/updateOrderStatus/{id}/{status}")
     public ResponseResult updateOrderStatus(@PathVariable Long id,@PathVariable Long status){
         return orderService.updateOrderStatus(id,status);
