@@ -92,6 +92,20 @@ public class OrderController {
     public ResponseResult getCount(){
         return orderService.getCount();
     }
+    @ApiOperation(value = "获取订单数量",notes = "<span style='color:red;'>详细描述：</span>&nbsp;获取订单数量")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "keyword", value = "关键字", dataType = "String", defaultValue = "" ,paramType = "body"),
+            @ApiImplicitParam(name = "page", value = "页码", dataType = "String", defaultValue = "",paramType = "body"),
+            @ApiImplicitParam(name = "perPage", value = "每页数量", dataType = "String", defaultValue = "",paramType = "body")
+    })
+    @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:custodian')")
+    @PostMapping("/getOrderSearchCount")
+    public ResponseResult getOrderSearchCount(@RequestBody QueryByPageParams params){
+        return orderService.getOrderSearchCount(params);
+    }
+
+
+
     @ApiOperation(value = "根据角色获取订单数量",notes = "<span style='color:red;'>详细描述：</span>&nbsp;根据角色获取订单数量")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "rid", value = "关键字", dataType = "Integer", defaultValue = "" ,paramType = "path")

@@ -56,6 +56,19 @@ public class UserController {
         return userService.getUserCount();
     }
 
+    @ApiOperation(value = "获取搜索结果数量",notes = "<span style='color:red;'>详细描述：</span>&nbsp;获取搜索结果数量")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "查询成功"),
+            @ApiResponse(code = 150, message = "数据库操作异常!请尽快联系系统管理员!")
+
+    })
+    @PreAuthorize("hasAuthority('system:user:admin')")
+    @PostMapping("/user/getSearchCount")
+    public ResponseResult getSearchCount(@RequestBody QueryByPageParams params){
+        return userService.getSearchCount(params);
+    }
+
+
 
     @ApiOperation(value = "根据Token查询用户",notes = "<span style='color:red;'>详细描述：</span>&nbsp;根据Token查询用户")
     @ApiImplicitParams({

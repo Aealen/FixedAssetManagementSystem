@@ -51,6 +51,8 @@ public class OrderServiceImpl implements OrderService {
         return new ResponseResult(150,"数据库操作异常!请尽快联系系统管理员!");
     }
 
+
+
     @Override
     public ResponseResult getCountByRole(Long rid,Long uid) {
         QueryWrapper<Order> orderQueryWrapper = new QueryWrapper<>();
@@ -91,6 +93,17 @@ public class OrderServiceImpl implements OrderService {
         }
         return new ResponseResult(200,"查询成功",orderByPage);
 
+    }
+
+    @Override
+    public ResponseResult getOrderSearchCount(QueryByPageParams params) {
+        ResponseResult responseResult = queryByPage(params);
+        List data = (List) responseResult.getData();
+        if (Objects.isNull(data)){
+            return new ResponseResult(200,"查询成功",0);
+        }
+        responseResult.setData(data.size());
+        return responseResult;
     }
 
     @Override

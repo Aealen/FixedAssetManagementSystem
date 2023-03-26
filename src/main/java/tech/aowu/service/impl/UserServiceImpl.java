@@ -61,6 +61,22 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * 获取搜索结果数量
+     * @param params
+     * @return
+     */
+    @Override
+    public ResponseResult getSearchCount(QueryByPageParams params) {
+        ResponseResult responseResult = queryUserByPage(params);
+        List data = (List) responseResult.getData();
+        if (Objects.isNull(data)){
+            return new ResponseResult(200,"查询成功",0);
+        }
+        responseResult.setData(data.size());
+        return responseResult;
+    }
+
+    /**
      * 分页查询用户
      * @param params
      * @return
@@ -73,8 +89,9 @@ public class UserServiceImpl implements UserService {
         }
         int currIndex=(params.getPage()-1)*params.getPerPage();
         List<UserView> userByPage = userMapper.getUserByPage(params.getKeyword(),currIndex, params.getPerPage());
-        if (Objects.isNull(userByPage.get(0))){
-            return new ResponseResult(150,"数据库操作异常!请尽快联系系统管理员!");
+
+        if (userByPage.size()==0){
+            return new ResponseResult(153 ,"无搜索结果！");
         }
         return new ResponseResult(200,"查询成功",userByPage);
     }

@@ -32,4 +32,6 @@ public interface OrderService {
     ResponseResult getWorker(Long did);
 
     ResponseResult queryByPageForCustodian(QueryByPageParams params);
+
+    ResponseResult getOrderSearchCount(QueryByPageParams params);
 }

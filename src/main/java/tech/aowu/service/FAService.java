@@ -35,4 +35,6 @@ public interface FAService {
     ResponseResult updatefa(FaFixedasset faFixedasset);
 
     ResponseResult queryFaByTDID(FAQueryParams params);
+
+    ResponseResult getFASearchCount(QueryByPageParams params);
 }

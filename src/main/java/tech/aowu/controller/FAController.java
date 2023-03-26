@@ -94,6 +94,17 @@ public class FAController {
     }
 
 
+    @ApiOperation(value = "固定资产总数",notes = "<span style='color:red;'>详细描述：</span>&nbsp;固定资产总数")
+    @ApiResponses({
+            @ApiResponse(code = 150, message = "数据库操作异常")
+    })
+    @PreAuthorize("hasAuthority('system:user:admin')")
+    @PostMapping("/getFASearchCount")
+    public ResponseResult getFASearchCount(@RequestBody QueryByPageParams params){
+        return faService.getFASearchCount(params);
+    }
+
+
 
 
     @ApiOperation(value = "新增固定资产",notes = "<span style='color:red;'>详细描述：</span>&nbsp;新增固定资产")

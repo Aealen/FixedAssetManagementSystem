@@ -33,4 +33,5 @@ public interface UserService {
 
     ResponseResult getAllCustodian();
 
+    ResponseResult getSearchCount(QueryByPageParams params);
 }

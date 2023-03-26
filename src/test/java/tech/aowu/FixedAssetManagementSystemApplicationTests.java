@@ -16,8 +16,10 @@ import tech.aowu.utils.RedisCache;
 
 import javax.annotation.Resource;
 import java.sql.Time;
+import java.util.Deque;
 import java.util.List;
 import java.util.Random;
+import java.util.Stack;
 
 @SpringBootTest
 class FixedAssetManagementSystemApplicationTests {
@@ -59,7 +61,21 @@ class FixedAssetManagementSystemApplicationTests {
 
 
     }
+     public class ListNode {
+      int val;
+      ListNode next;
+      ListNode() {}
+      ListNode(int val) { this.val = val; }
+      ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+    }
 
+    @Test
+    public void testOout(){
+        ListNode head=new ListNode();
+
+
+
+    }
     @Test
     public void testUserMapper(){
         List<UmUser> umUsers = userMapper.selectList(null);
