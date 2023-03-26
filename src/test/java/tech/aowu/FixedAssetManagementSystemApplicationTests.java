@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import tech.aowu.aspects.UserOpreateLogAnnotation;
 import tech.aowu.entity.vo.ResponseResult;
 import tech.aowu.entity.po.UmUser;
 import tech.aowu.entity.vo.UserView;
@@ -69,11 +70,12 @@ class FixedAssetManagementSystemApplicationTests {
       ListNode(int val, ListNode next) { this.val = val; this.next = next; }
     }
 
+
+    String code="Test String";
     @Test
+    @UserOpreateLogAnnotation
     public void testOout(){
-        ListNode head=new ListNode();
-
-
+        System.out.println("Test is exec!");
 
     }
     @Test

@@ -7,6 +7,7 @@ import tech.aowu.entity.po.UmUser;
 import tech.aowu.entity.vo.ResponseResult;
 import tech.aowu.entity.vo.QueryByPageParams;
 import tech.aowu.entity.vo.UserView;
+import tech.aowu.service.SysLogService;
 import tech.aowu.service.UserService;
 
 import javax.annotation.Resource;
@@ -24,6 +25,10 @@ public class UserController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    SysLogService sysLogService;
+
 
     @ApiOperation(value = "分页查询用户",notes = "<span style='color:red;'>详细描述：</span>&nbsp;分页查询用户")
     @ApiImplicitParams({
@@ -113,7 +118,8 @@ public class UserController {
     })
     @PreAuthorize("hasAuthority('system:user:admin')")
     @GetMapping("/user/resetPassword/{uid}")
-    public ResponseResult resetUserPassword(@PathVariable Long uid){
+    public ResponseResult resetUserPassword(@PathVariable Long uid,HttpServletRequest request){
+        sysLogService.WriteLog("UserController",request.getHeader("Authorization"),"重置用户密码  ID："+uid);
 
         return userService.resetUserPassword(uid);
     }
@@ -129,7 +135,8 @@ public class UserController {
             @ApiResponse(code = 150, message = "数据库操作异常")
     })
     @PostMapping("/user/changePwd")
-    public ResponseResult changePwd(@RequestBody UmUser user){
+    public ResponseResult changePwd(@RequestBody UmUser user,HttpServletRequest request){
+        sysLogService.WriteLog("UserController",request.getHeader("Authorization"),"修改用户信息 ID："+user.getUid() +" 密码 --> "+user.getPassword());
         return userService.changePwd(user.getUid(),user.getPassword());
     }
 
@@ -144,12 +151,13 @@ public class UserController {
     })
     @PreAuthorize("hasAuthority('system:user:admin')")
     @GetMapping("/user/delUser/{uid}")
-    public ResponseResult delUser(@PathVariable Long uid){
+    public ResponseResult delUser(@PathVariable Long uid,HttpServletRequest request){
+        sysLogService.WriteLog("UserController",request.getHeader("Authorization"),"删除用户："+uid);
 
         return userService.changeUserStatus(uid,1);
     }
 
-    @ApiOperation(value = "删除用户",notes = "<span style='color:red;'>详细描述：</span>&nbsp;删除用户")
+    @ApiOperation(value = "负责人获取所有用户",notes = "<span style='color:red;'>详细描述：</span>&nbsp;负责人获取所有用户")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "uid", value = "1", dataType = "Long", defaultValue = "" ,paramType = "body"),
     })

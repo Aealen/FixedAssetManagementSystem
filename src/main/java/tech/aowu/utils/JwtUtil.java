@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import tech.aowu.aspects.UserOpreateLogAnnotation;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -25,6 +26,28 @@ public class JwtUtil {
         String token = UUID.randomUUID().toString().replaceAll("-", "");
         return token;
     }
+
+    @UserOpreateLogAnnotation
+    public static String testAnno(String str){
+        System.out.println("its sout in func: "+ str);
+        return "its return string";
+    }
+
+    @UserOpreateLogAnnotation
+    public static void main(String[] args) throws Exception {
+//        String jwt = createJWT("2123");
+//        String jwt = createJWT("1234");
+//        String jwt = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxZTU5ZGJiMzljNDI0ZmY2OGRiNzdiMzY0NzFhODY4NyIsInN1YiI6IntcInVpZFwiOlwiMTNcIixcInJpZFwiOlwiM1wiLFwidXNlcm5hbWVcIjpcIkVsb2VcIn0iLCJpc3MiOiJBZWFsZW4iLCJpYXQiOjE2NzYzNTA2ODAsImV4cCI6MTY3NjM1NDI4MH0.E_ZKMJUMv7UvJCZ79miDezpc8tYjZyo7RP0EQ14C88k";
+//        System.out.println(jwt);
+//
+//        Claims claims = parseJWT(jwt);
+//        String subject = claims.getSubject();
+//        System.out.println(subject);
+        System.out.println(testAnno("testString"));
+
+//        System.out.println(claims);
+    }
+
 
     /**
      * 生成jtw
@@ -78,18 +101,7 @@ public class JwtUtil {
         return builder.compact();
     }
 
-    public static void main(String[] args) throws Exception {
-//        String jwt = createJWT("2123");
-//        String jwt = createJWT("1234");
-        String jwt = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxZTU5ZGJiMzljNDI0ZmY2OGRiNzdiMzY0NzFhODY4NyIsInN1YiI6IntcInVpZFwiOlwiMTNcIixcInJpZFwiOlwiM1wiLFwidXNlcm5hbWVcIjpcIkVsb2VcIn0iLCJpc3MiOiJBZWFsZW4iLCJpYXQiOjE2NzYzNTA2ODAsImV4cCI6MTY3NjM1NDI4MH0.E_ZKMJUMv7UvJCZ79miDezpc8tYjZyo7RP0EQ14C88k";
-        System.out.println(jwt);
 
-        Claims claims = parseJWT(jwt);
-        String subject = claims.getSubject();
-        System.out.println(subject);
-
-//        System.out.println(claims);
-    }
 
     /**
      * 生成加密后的秘钥 secretKey

@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import tech.aowu.entity.vo.ResponseResult;
 import tech.aowu.entity.po.UmUserRole;
 import tech.aowu.service.RoleService;
+import tech.aowu.service.SysLogService;
+import tech.aowu.service.impl.SysLogServiceImpl;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +27,9 @@ public class RoleController {
 
     @Resource
     RoleService roleService;
+
+    @Resource
+    SysLogService sysLogService;
 
     @ApiOperation(value = "获取所有角色",notes = "<span style='color:red;'>详细描述：</span>&nbsp;获取所有角色")
     @ApiImplicitParams({
@@ -53,7 +58,9 @@ public class RoleController {
     })
     @PreAuthorize("hasAuthority('system:user:admin')")
     @PostMapping("/setUserRole")
-    public ResponseResult setUserRole(@RequestBody UmUserRole umUserRole){
+    public ResponseResult setUserRole(@RequestBody UmUserRole umUserRole,HttpServletRequest request){
+        sysLogService.WriteLog("RoleController",request.getHeader("Authorization"),"设置用户角色 UID："+umUserRole.getUid() +" --> "+umUserRole.getRid());
+
         return roleService.setUserRole(umUserRole.getUid(),umUserRole.getRid());
     }
 

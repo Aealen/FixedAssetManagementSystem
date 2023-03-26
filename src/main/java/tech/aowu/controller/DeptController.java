@@ -8,6 +8,7 @@ import tech.aowu.entity.vo.ResponseResult;
 import tech.aowu.entity.vo.QueryByPageParams;
 import tech.aowu.entity.vo.UserDept;
 import tech.aowu.service.DeptService;
+import tech.aowu.service.SysLogService;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +26,10 @@ public class DeptController {
 
     @Resource
     DeptService deptService;
+
+    @Resource
+    SysLogService sysLogService;
+
 
     @ApiOperation(value = "获取所有部门信息",notes = "<span style='color:red;'>详细描述：</span>&nbsp;获取所有部门信息")
     @ApiImplicitParams({
@@ -84,7 +89,10 @@ public class DeptController {
     })
     @PreAuthorize("hasAuthority('system:user:admin')")
     @PostMapping("/setUserDept")
-    public ResponseResult setUserDept(@RequestBody UserDept userDept){
+    public ResponseResult setUserDept(@RequestBody UserDept userDept,HttpServletRequest request){
+
+        sysLogService.WriteLog("DeptController",request.getHeader("Authorization"),"修改用户ID："+userDept.getUid()+"  部门 --> "+userDept.getDid());
+
         return deptService.setUserDept(userDept.getUid(),userDept.getDid());
     }
 
@@ -99,7 +107,9 @@ public class DeptController {
     })
     @PreAuthorize("hasAuthority('system:user:admin')")
     @PostMapping("/addDept/{name}")
-    public ResponseResult addDept(@PathVariable String name){
+    public ResponseResult addDept(@PathVariable String name,HttpServletRequest request){
+        sysLogService.WriteLog("DeptController",request.getHeader("Authorization"),"新增部门 --> "+name);
+
         return deptService.addDept(name);
     }
 
@@ -116,7 +126,9 @@ public class DeptController {
     })
     @PreAuthorize("hasAuthority('system:user:admin')")
     @PostMapping("/updateDeptInfo")
-    public ResponseResult updateDeptInfo( @RequestBody FaDepartment faDepartment){
+    public ResponseResult updateDeptInfo( @RequestBody FaDepartment faDepartment,HttpServletRequest request){
+        sysLogService.WriteLog("DeptController",request.getHeader("Authorization"),"修改部门信息： "+faDepartment.getDid());
+
         return deptService.updateDeptInfo(faDepartment);
     }
 

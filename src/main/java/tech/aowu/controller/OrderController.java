@@ -7,8 +7,10 @@ import tech.aowu.entity.po.Order;
 import tech.aowu.entity.vo.QueryByPageParams;
 import tech.aowu.entity.vo.ResponseResult;
 import tech.aowu.service.OrderService;
+import tech.aowu.service.SysLogService;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Description: TODO
@@ -23,6 +25,8 @@ public class OrderController {
 
     @Resource
     private OrderService orderService;
+    @Resource
+    private SysLogService sysLogService;
 
     @ApiOperation(value = "分页查询订单信息",notes = "<span style='color:red;'>详细描述：</span>&nbsp;分页查询订单信息")
     @ApiImplicitParams({
@@ -67,7 +71,9 @@ public class OrderController {
     })
     @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:reporter')")
     @PostMapping("/addOrder")
-    public ResponseResult addOrder(@RequestBody Order order){
+    public ResponseResult addOrder(@RequestBody Order order, HttpServletRequest request){
+        sysLogService.WriteLog("OrderController",request.getHeader("Authorization"),"新增订单");
+
         return orderService.addOrder(order);
     }
 
@@ -132,7 +138,9 @@ public class OrderController {
     })
     @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:reporter','system:user:worker','system:user:custodian')")
     @GetMapping("/del/{id}")
-    public ResponseResult delOrder(@PathVariable Long id){
+    public ResponseResult delOrder(@PathVariable Long id,HttpServletRequest request){
+        sysLogService.WriteLog("OrderController",request.getHeader("Authorization"),"删除订单： "+id);
+
         return orderService.delOrder(id);
     }
 
@@ -143,7 +151,9 @@ public class OrderController {
     })
     @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:reporter','system:user:worker','system:user:custodian')")
     @GetMapping("/updateOrderStatus/{id}/{status}")
-    public ResponseResult updateOrderStatus(@PathVariable Long id,@PathVariable Long status){
+    public ResponseResult updateOrderStatus(@PathVariable Long id,@PathVariable Long status,HttpServletRequest request){
+        sysLogService.WriteLog("OrderController",request.getHeader("Authorization"),"修改订单状态  ID："+id+" 新状态"+status);
+
         return orderService.updateOrderStatus(id,status);
     }
 

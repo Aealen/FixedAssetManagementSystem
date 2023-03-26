@@ -9,9 +9,11 @@ import tech.aowu.entity.vo.FAQueryParams;
 import tech.aowu.entity.vo.ResponseResult;
 import tech.aowu.entity.vo.QueryByPageParams;
 import tech.aowu.service.FAService;
+import tech.aowu.service.SysLogService;
 
 import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Description: TODO
@@ -27,6 +29,9 @@ public class FAController {
 
     @Resource
     FAService faService;
+
+    @Resource
+    SysLogService sysLogService;
 
 
     @ApiOperation(value = "分页查询固定资产",notes = "<span style='color:red;'>详细描述：</span>&nbsp;分页查询用户")
@@ -52,7 +57,9 @@ public class FAController {
 //    @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:custodian','system:user:worker','system:user:reporter')")
     @PermitAll
     @PostMapping("/updatefa")
-    public ResponseResult updatefa(@RequestBody FaFixedasset faFixedasset){
+    public ResponseResult updatefa(@RequestBody FaFixedasset faFixedasset, HttpServletRequest request){
+        sysLogService.WriteLog("FAController",request.getHeader("Authorization"),"资产信息修改 ID： "+faFixedasset.getFid());
+
         return faService.updatefa(faFixedasset);
     }
 
@@ -118,7 +125,8 @@ public class FAController {
     })
     @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:custodian')")
     @PostMapping("/addFa")
-    public ResponseResult addFa(@RequestBody FaFixedasset faFixedasset){
+    public ResponseResult addFa(@RequestBody FaFixedasset faFixedasset,HttpServletRequest request){
+        sysLogService.WriteLog("FAController",request.getHeader("Authorization"),"新增固定资产： "+faFixedasset.getName());
         return faService.addFa(faFixedasset);
     }
 
@@ -135,7 +143,11 @@ public class FAController {
     })
     @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:custodian')")
     @GetMapping("/delFa/{fid}")
-    public ResponseResult delFa(@PathVariable Long fid){
+    public ResponseResult delFa(@PathVariable Long fid,HttpServletRequest request){
+
+        sysLogService.WriteLog("FAController",request.getHeader("Authorization"),"删除固定资产 ID："+fid);
+
+
         return faService.changeFaStatus(fid,1);
     }
 
@@ -178,7 +190,9 @@ public class FAController {
     })
     @PreAuthorize("hasAnyAuthority('system:user:admin')")
     @PostMapping("/addType")
-    public ResponseResult addType( String typename){
+    public ResponseResult addType( String typename,HttpServletRequest request){
+        sysLogService.WriteLog("FAController",request.getHeader("Authorization"),"新增类型： "+typename);
+
         return faService.addType(typename);
     }
 
@@ -190,7 +204,9 @@ public class FAController {
     })
     @PreAuthorize("hasAnyAuthority('system:user:admin')")
     @PostMapping("/updateTypeInfo")
-    public ResponseResult updateTypeInfo(@RequestBody FaType faType){
+    public ResponseResult updateTypeInfo(@RequestBody FaType faType,HttpServletRequest request){
+        sysLogService.WriteLog("FAController",request.getHeader("Authorization"),"更新类型信息  ID："+faType.getTid());
+
         return faService.updateTypeInfo(faType);
     }
 
