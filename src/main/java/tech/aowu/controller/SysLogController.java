@@ -29,6 +29,21 @@ public class SysLogController {
     public ResponseResult getAllLogs(){
         return sysLogService.getAllLogs();
     }
+    @PreAuthorize("hasAuthority('system:user:admin')")
+    @GetMapping("/getLogsCount")
+    public ResponseResult getLogsCount(){
+        return sysLogService.getLogsCount();
+    }
+
+
+
+    @PreAuthorize("hasAuthority('system:user:admin')")
+    @PostMapping("/getAllLogsByPage")
+    public ResponseResult getAllLogsByPage(@RequestBody QueryByPageParams params){
+        return sysLogService.getAllLogsByPage(params);
+    }
+
+
 
 
 }

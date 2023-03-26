@@ -9,6 +9,7 @@ import reactor.util.annotation.Nullable;
 import tech.aowu.entity.po.SysLog;
 import tech.aowu.entity.vo.QueryByPageParams;
 import tech.aowu.entity.vo.ResponseResult;
+import tech.aowu.entity.vo.UserView;
 import tech.aowu.mapper.SysLogMapper;
 import tech.aowu.service.SysLogService;
 import tech.aowu.utils.JwtUtil;
@@ -57,5 +58,25 @@ public class SysLogServiceImpl implements SysLogService {
     public ResponseResult getAllLogs() {
         List<SysLog> allLogs = sysLogMapper.getAllLogs();
         return new ResponseResult(200,"查询成功",allLogs);
+    }
+
+    @Override
+    public ResponseResult getLogsCount() {
+        int size = sysLogMapper.getAllLogs().size();
+        return new ResponseResult(200,"查询成功",size);
+    }
+
+    @Override
+    public ResponseResult getAllLogsByPage(QueryByPageParams params) {
+        if (params.getKeyword()==null||params.getKeyword().isEmpty()){
+            params.setKeyword("");
+        }
+        int currIndex=(params.getPage()-1)*params.getPerPage();
+        List<SysLog> logsByPage = sysLogMapper.getLogsByPage(currIndex, params.getPerPage());
+
+        if (logsByPage.size()==0){
+            return new ResponseResult(153 ,"无搜索结果！");
+        }
+        return new ResponseResult(200,"查询成功",logsByPage);
     }
 }

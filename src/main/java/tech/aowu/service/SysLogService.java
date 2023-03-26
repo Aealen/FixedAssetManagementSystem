@@ -14,4 +14,8 @@ public interface SysLogService {
     public void WriteLog(String position,String opreater,String content);
 
     ResponseResult getAllLogs();
+
+    ResponseResult getAllLogsByPage(QueryByPageParams params);
+
+    ResponseResult getLogsCount();
 }

@@ -8,4 +8,11 @@
     <select id="getAllLogs" resultType="tech.aowu.entity.po.SysLog">
         select * from sys_log;
     </select>
+
+
+    <select id="getLogsByPage" resultType="tech.aowu.entity.po.SysLog">
+        select * from sys_log
+        limit #{currIndex},#{perPage};
+
+    </select>
 </mapper>

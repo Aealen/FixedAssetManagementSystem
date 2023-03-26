@@ -17,4 +17,6 @@ public interface SysLogMapper extends BaseMapper<SysLog> {
 
 
     List<SysLog> getAllLogs();
+
+    List<SysLog> getLogsByPage(int currIndex, Integer perPage);
 }
