@@ -25,7 +25,7 @@ public class SysLogController {
     SysLogService sysLogService;
 
     @PreAuthorize("hasAuthority('system:user:admin')")
-    @GetMapping("/user/getAllLogs")
+    @GetMapping("/getAllLogs")
     public ResponseResult getAllLogs(){
         return sysLogService.getAllLogs();
     }
