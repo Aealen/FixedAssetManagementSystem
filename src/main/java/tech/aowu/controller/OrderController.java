@@ -87,6 +87,21 @@ public class OrderController {
         return orderService.getWorker(did);
     }
 
+    @ApiOperation(value = "根据订单状态获取订单数量",notes = "<span style='color:red;'>详细描述：</span>&nbsp;获取订单数量")
+    @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:custodian')")
+    @GetMapping("/getCountByStatus/{status}")
+    public ResponseResult getCountByStatus(@PathVariable int status){
+        return orderService.getCountByStatus(status);
+    }
+
+    @ApiOperation(value = "获取订单趋势",notes = "<span style='color:red;'>详细描述：</span>&nbsp;获取订单趋势")
+    @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:custodian')")
+    @GetMapping("/getOrderCountTrend")
+    public ResponseResult getOrderCountTrend(){
+        return orderService.getOrderCountTrend();
+    }
+
+
     @ApiOperation(value = "获取订单数量",notes = "<span style='color:red;'>详细描述：</span>&nbsp;获取订单数量")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "keyword", value = "关键字", dataType = "String", defaultValue = "" ,paramType = "body"),
@@ -98,7 +113,9 @@ public class OrderController {
     public ResponseResult getCount(){
         return orderService.getCount();
     }
-    @ApiOperation(value = "获取订单数量",notes = "<span style='color:red;'>详细描述：</span>&nbsp;获取订单数量")
+
+
+    @ApiOperation(value = "获取订单搜索结果数量",notes = "<span style='color:red;'>详细描述：</span>&nbsp;获取订单数量")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "keyword", value = "关键字", dataType = "String", defaultValue = "" ,paramType = "body"),
             @ApiImplicitParam(name = "page", value = "页码", dataType = "String", defaultValue = "",paramType = "body"),

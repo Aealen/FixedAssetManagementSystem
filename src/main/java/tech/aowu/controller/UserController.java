@@ -156,6 +156,15 @@ public class UserController {
 
         return userService.changeUserStatus(uid,1);
     }
+    @ApiOperation(value = "获取在线用户数量",notes = "<span style='color:red;'>详细描述：</span>&nbsp;获取在线用户数量")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "uid", value = "1", dataType = "Long", defaultValue = "" ,paramType = "body"),
+    })
+    @PreAuthorize("hasAuthority('system:user:admin')")
+    @GetMapping("/user/getOnlineCount")
+    public ResponseResult getOnlineCount(){
+        return userService.getOnlineUserCount();
+    }
 
     @ApiOperation(value = "负责人获取所有用户",notes = "<span style='color:red;'>详细描述：</span>&nbsp;负责人获取所有用户")
     @ApiImplicitParams({

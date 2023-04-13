@@ -60,4 +60,7 @@
         </if>
         limit #{currIndex},#{perPage}
     </select>
+    <select id="getOrderCountTrend" resultType="tech.aowu.entity.po.OrderCount">
+        select * from order_count order by date desc limit 0,7;
+    </select>
 </mapper>

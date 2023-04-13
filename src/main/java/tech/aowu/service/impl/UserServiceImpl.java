@@ -45,6 +45,9 @@ public class UserServiceImpl implements UserService {
     @Resource
     private PasswordEncoder passwordEncoder;
 
+    @Resource
+    private RedisCache redisCache;
+
 
     /**
      * 获取用户总数
@@ -58,6 +61,15 @@ public class UserServiceImpl implements UserService {
             return new ResponseResult(200,userCount);
         }
         return new ResponseResult(150,"数据库操作异常!请尽快联系系统管理员!");
+    }
+
+    /**
+     * 获取在线用户数量
+     * @return
+     */
+    public ResponseResult getOnlineUserCount(){
+        int count = redisCache.getCount("login:*");
+        return new ResponseResult(200,count);
     }
 
     /**

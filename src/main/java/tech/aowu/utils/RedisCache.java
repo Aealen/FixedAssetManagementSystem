@@ -28,6 +28,22 @@ public class RedisCache
         redisTemplate.opsForValue().set(key, value);
     }
 
+
+    /**
+     * 获取指定key的数量
+     * @return
+     */
+    public int getCount(String key){
+        try{
+            return redisTemplate.keys(key).size();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+
     /**
      * 缓存基本的对象，Integer、String、实体类等
      *
@@ -203,7 +219,7 @@ public class RedisCache
 
     /**
      * 删除Hash中的数据
-     * 
+     *
      * @param key
      * @param hkey
      */

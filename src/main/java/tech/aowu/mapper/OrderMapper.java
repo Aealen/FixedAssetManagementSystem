@@ -3,6 +3,7 @@ package tech.aowu.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import tech.aowu.entity.po.Order;
+import tech.aowu.entity.po.OrderCount;
 import tech.aowu.entity.vo.OrderView;
 
 import java.util.List;
@@ -26,6 +27,8 @@ public interface OrderMapper extends BaseMapper<Order> {
     int updateOrderStatus(Long id, Long status);
 
     int delOrder(Long id);
+
+    List<OrderCount> getOrderCountTrend();
 
     List<OrderView> getOrderByPageAndRole(String keyword, int currIndex, Integer perPage, Long rid, Long uid);
 

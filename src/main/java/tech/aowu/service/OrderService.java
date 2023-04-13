@@ -34,4 +34,9 @@ public interface OrderService {
     ResponseResult queryByPageForCustodian(QueryByPageParams params);
 
     ResponseResult getOrderSearchCount(QueryByPageParams params);
+
+    ResponseResult getCountByStatus(int status);
+
+    ResponseResult getOrderCountTrend();
+
 }

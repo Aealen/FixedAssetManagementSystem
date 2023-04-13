@@ -3,6 +3,7 @@ package tech.aowu.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.stereotype.Service;
 import tech.aowu.entity.po.Order;
+import tech.aowu.entity.po.OrderCount;
 import tech.aowu.entity.po.UmUser;
 import tech.aowu.entity.vo.OrderView;
 import tech.aowu.entity.vo.QueryByPageParams;
@@ -15,6 +16,7 @@ import tech.aowu.service.OrderService;
 import javax.annotation.Resource;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -51,7 +53,24 @@ public class OrderServiceImpl implements OrderService {
         return new ResponseResult(150,"数据库操作异常!请尽快联系系统管理员!");
     }
 
+    @Override
+    public ResponseResult getOrderCountTrend() {
 
+        List<OrderCount> orderCounts=orderMapper.getOrderCountTrend();
+        if (Objects.isNull(orderCounts)){
+            return new ResponseResult(150,"数据库操作异常!请尽快联系系统管理员!");
+        }
+
+        List<String> dates=new ArrayList<>();
+        List<Long> counts=new ArrayList<>();
+
+        for (OrderCount item:orderCounts) {
+            dates.add(item.getDate());
+            counts.add(Long.valueOf(item.getCount()));
+        }
+
+        return new ResponseResult(200,new Object[]{dates,counts});
+    }
 
     @Override
     public ResponseResult getCountByRole(Long rid,Long uid) {
@@ -76,6 +95,15 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
+    @Override
+    public ResponseResult getCountByStatus(int status) {
+        QueryWrapper<Order> orderQueryWrapper = new QueryWrapper<>();
+        orderQueryWrapper.eq("status",status);
+
+        Integer count = orderMapper.selectCount(orderQueryWrapper);
+        return new ResponseResult(200,count );
+    }
+
     /**
      * 分页查询
      * @param params
@@ -94,6 +122,8 @@ public class OrderServiceImpl implements OrderService {
         return new ResponseResult(200,"查询成功",orderByPage);
 
     }
+
+
 
     @Override
     public ResponseResult getOrderSearchCount(QueryByPageParams params) {
