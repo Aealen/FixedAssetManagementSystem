@@ -39,6 +39,7 @@ public class UserView {
     }
 
     private Long id;
+    private Float balance;
     private String nickname;
     private String username;
     private String password;

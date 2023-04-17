@@ -55,7 +55,7 @@ public class UserController {
             @ApiResponse(code = 150, message = "数据库操作异常!请尽快联系系统管理员!")
 
     })
-    @PreAuthorize("hasAuthority('system:user:admin')")
+    @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:reporter','system:user:worker','system:user:custodian')")
     @GetMapping("/user/getUserCount")
     public ResponseResult getUserCount(){
         return userService.getUserCount();
@@ -160,7 +160,7 @@ public class UserController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "uid", value = "1", dataType = "Long", defaultValue = "" ,paramType = "body"),
     })
-    @PreAuthorize("hasAuthority('system:user:admin')")
+    @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:reporter','system:user:worker','system:user:custodian')")
     @GetMapping("/user/getOnlineCount")
     public ResponseResult getOnlineCount(){
         return userService.getOnlineUserCount();

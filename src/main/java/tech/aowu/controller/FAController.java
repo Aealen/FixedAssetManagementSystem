@@ -94,7 +94,7 @@ public class FAController {
     @ApiResponses({
             @ApiResponse(code = 150, message = "数据库操作异常")
     })
-    @PreAuthorize("hasAuthority('system:user:admin')")
+    @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:reporter','system:user:worker','system:user:custodian')")
     @GetMapping("/getFaCount")
     public ResponseResult getFaCount(){
         return faService.getFaCount();
@@ -105,7 +105,7 @@ public class FAController {
     @ApiResponses({
             @ApiResponse(code = 150, message = "数据库操作异常")
     })
-    @PreAuthorize("hasAuthority('system:user:admin')")
+    @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:reporter','system:user:worker','system:user:custodian')")
     @PostMapping("/getFASearchCount")
     public ResponseResult getFASearchCount(@RequestBody QueryByPageParams params){
         return faService.getFASearchCount(params);

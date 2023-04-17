@@ -88,14 +88,14 @@ public class OrderController {
     }
 
     @ApiOperation(value = "根据订单状态获取订单数量",notes = "<span style='color:red;'>详细描述：</span>&nbsp;获取订单数量")
-    @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:custodian')")
+    @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:reporter','system:user:worker','system:user:custodian')")
     @GetMapping("/getCountByStatus/{status}")
     public ResponseResult getCountByStatus(@PathVariable int status){
         return orderService.getCountByStatus(status);
     }
 
     @ApiOperation(value = "获取订单趋势",notes = "<span style='color:red;'>详细描述：</span>&nbsp;获取订单趋势")
-    @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:custodian')")
+    @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:reporter','system:user:worker','system:user:custodian')")
     @GetMapping("/getOrderCountTrend")
     public ResponseResult getOrderCountTrend(){
         return orderService.getOrderCountTrend();
