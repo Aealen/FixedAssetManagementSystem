@@ -17,9 +17,15 @@
 
 
     <select id="getFaByPage" resultType="tech.aowu.entity.vo.FAView">
-        select * from fixedassets
+        select * from fixedassets where 1=1
         <if test="keyword!=''">
-            where fa_name like CONCAT('%',#{keyword},'%')
+            AND fa_name like CONCAT('%',#{keyword},'%')
+        </if>
+        <if test="did!=null">
+            AND fa_did=#{did}
+        </if>
+        <if test="tid!=null">
+            AND fa_tid=#{tid}
         </if>
         limit #{currIndex},#{pageSize}
     </select>

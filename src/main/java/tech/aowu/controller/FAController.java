@@ -44,7 +44,7 @@ public class FAController {
             @ApiResponse(code = 150, message = "数据库操作异常")
 
     })
-    @PreAuthorize("hasAuthority('system:user:admin')")
+    @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:worker','system:user:custodian')")
     @PostMapping("/queryFaByPage")
     public ResponseResult queryFaByPage(@RequestBody QueryByPageParams params){
         return faService.queryFaByPage(params);

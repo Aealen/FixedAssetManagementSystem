@@ -121,7 +121,7 @@ public class OrderController {
             @ApiImplicitParam(name = "page", value = "页码", dataType = "String", defaultValue = "",paramType = "body"),
             @ApiImplicitParam(name = "perPage", value = "每页数量", dataType = "String", defaultValue = "",paramType = "body")
     })
-    @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:custodian')")
+    @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:custodian','system:user:worker')")
     @PostMapping("/getOrderSearchCount")
     public ResponseResult getOrderSearchCount(@RequestBody QueryByPageParams params){
         return orderService.getOrderSearchCount(params);

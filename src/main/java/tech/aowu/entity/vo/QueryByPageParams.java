@@ -21,5 +21,7 @@ public class QueryByPageParams {
     private Integer perPage;
     private Long rid;
     private Long uid;
+    private Long tid;
+    private Long did;
 
 }

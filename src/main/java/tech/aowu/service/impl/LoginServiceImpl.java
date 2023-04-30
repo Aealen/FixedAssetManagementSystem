@@ -68,8 +68,6 @@ public class LoginServiceImpl implements LoginService {
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
         if(Objects.isNull(authenticate)){
             return new ResponseResult(101,"用户名或密码错误!");
-
-//            throw new RuntimeException("用户名或密码错误");
         }
         //使用userid生成token
         LoginUser loginUser = (LoginUser) authenticate.getPrincipal();

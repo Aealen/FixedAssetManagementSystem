@@ -201,7 +201,7 @@ public class UserController {
             @ApiResponse(code = 103, message = "用户不存在"),
             @ApiResponse(code = 150, message = "数据库操作异常")
     })
-    @PreAuthorize("hasAuthority('system:user:admin')")
+    @PreAuthorize("hasAnyAuthority('system:user:admin','system:user:reporter','system:user:worker','system:user:custodian')")
     @GetMapping("/user/getAllCustodian")
     public ResponseResult getAllCustodian(){
 

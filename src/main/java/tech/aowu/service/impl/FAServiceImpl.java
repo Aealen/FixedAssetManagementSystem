@@ -31,12 +31,11 @@ public class FAServiceImpl implements FAService {
             params.setKeyword("");
         }
         int currIndex=(params.getPage()-1)*params.getPerPage();
-        List<FAView> faByPage = faMapper.getFaByPage(params.getKeyword(),currIndex, params.getPerPage());
+        List<FAView> faByPage = faMapper.getFaByPage(params.getKeyword(),currIndex, params.getPerPage(),params.getTid(),params.getDid());
 
         if (faByPage.size()==0){
             return new ResponseResult(153 ,"无搜索结果！");
         }
-
 
         return new ResponseResult(200,"查询成功",faByPage);
 
