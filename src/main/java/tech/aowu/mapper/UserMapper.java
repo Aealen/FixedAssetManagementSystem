@@ -82,4 +82,14 @@ public interface UserMapper extends BaseMapper<UmUser> {
     List<CustodianView> getAllCustodian();
 
     List<UserView> getWorker(Long did);
+
+    /**
+     * 根据部门和角色获取用户数量
+     * @param deptId
+     * @param roleId
+     * @return
+     */
+    int getByDeptRoleCount(Long deptId, Long roleId);
+
+    List<UserView> getByDeptRole(Long deptId, Long roleId, int currIndex, Integer pageSize);
 }

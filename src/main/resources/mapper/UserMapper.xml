@@ -36,6 +36,26 @@
         where dept_id=#{did}
         AND role_id=3;
     </select>
+    <select id="getByDeptRole" resultType="tech.aowu.entity.vo.UserView">
+        select * from users WHERE 1=1
+        <if test="deptId!=null">
+            AND dept_id=#{deptId}
+        </if>
+        <if test="roleId!=null">
+            AND role_id=#{roleId}
+        </if>
+        limit #{currIndex},#{pageSize}
+    </select>
+    <select id="getByDeptRoleCount" resultType="java.lang.Integer">
+        select COUNT(*) from users WHERE 1=1
+        <if test="deptId!=null">
+            AND dept_id=#{deptId}
+        </if>
+        <if test="roleId!=null">
+            AND role_id=#{roleId}
+        </if>
+    </select>
+
 
 
     <update id="updateLoginTimeByUid" parameterType="long">

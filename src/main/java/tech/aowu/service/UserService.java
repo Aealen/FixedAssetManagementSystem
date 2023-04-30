@@ -2,6 +2,7 @@ package tech.aowu.service;
 
 import tech.aowu.entity.vo.ResponseResult;
 import tech.aowu.entity.vo.QueryByPageParams;
+import tech.aowu.entity.vo.UserByDeptAndRoleParams;
 import tech.aowu.entity.vo.UserView;
 
 /**
@@ -36,4 +37,8 @@ public interface UserService {
     ResponseResult getSearchCount(QueryByPageParams params);
 
     ResponseResult getOnlineUserCount();
+
+    ResponseResult getByDeptRoleCount(UserByDeptAndRoleParams params);
+
+    ResponseResult getByDeptRole(UserByDeptAndRoleParams params);
 }

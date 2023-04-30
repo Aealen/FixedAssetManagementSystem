@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import tech.aowu.entity.po.UmUser;
 import tech.aowu.entity.vo.ResponseResult;
 import tech.aowu.entity.vo.QueryByPageParams;
+import tech.aowu.entity.vo.UserByDeptAndRoleParams;
 import tech.aowu.entity.vo.UserView;
 import tech.aowu.service.SysLogService;
 import tech.aowu.service.UserService;
@@ -72,6 +73,31 @@ public class UserController {
     public ResponseResult getSearchCount(@RequestBody QueryByPageParams params){
         return userService.getSearchCount(params);
     }
+    @ApiOperation(value = "根据部门角色查询数量",notes = "<span style='color:red;'>详细描述：</span>&nbsp;根据部门角色查询数量")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "查询成功"),
+            @ApiResponse(code = 150, message = "数据库操作异常!请尽快联系系统管理员!")
+
+    })
+    @PreAuthorize("hasAuthority('system:user:admin')")
+    @PostMapping("/user/getByDeptRoleCount")
+    public ResponseResult getByDeptRoleCount(@RequestBody UserByDeptAndRoleParams params){
+        return userService.getByDeptRoleCount(params);
+    }
+    @ApiOperation(value = "根据部门角色查询数量",notes = "<span style='color:red;'>详细描述：</span>&nbsp;根据部门角色查询数量")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "查询成功"),
+            @ApiResponse(code = 150, message = "数据库操作异常!请尽快联系系统管理员!")
+
+    })
+    @PreAuthorize("hasAuthority('system:user:admin')")
+    @PostMapping("/user/getByDeptRole")
+    public ResponseResult getByDeptRole(@RequestBody UserByDeptAndRoleParams params){
+        return userService.getByDeptRole(params);
+    }
+
+
+
 
 
 

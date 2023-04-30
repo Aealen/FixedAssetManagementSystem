@@ -7,12 +7,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
-import tech.aowu.entity.vo.ResponseResult;
+import tech.aowu.entity.vo.*;
 import tech.aowu.entity.po.UmUser;
 import tech.aowu.entity.po.UmUserRole;
-import tech.aowu.entity.vo.CustodianView;
-import tech.aowu.entity.vo.QueryByPageParams;
-import tech.aowu.entity.vo.UserView;
 import tech.aowu.mapper.RoleMapper;
 import tech.aowu.mapper.UserMapper;
 import tech.aowu.service.UserService;
@@ -86,6 +83,31 @@ public class UserServiceImpl implements UserService {
         }
         responseResult.setData(data.size());
         return responseResult;
+    }
+
+    /**
+     * 获取根据部门和角色搜索结果数量
+     * @param params
+     * @return
+     */
+    @Override
+    public ResponseResult getByDeptRoleCount(UserByDeptAndRoleParams params) {
+
+        int count=userMapper.getByDeptRoleCount(params.getDeptId(),params.getRoleId());
+        if(Objects.isNull(count)) return new ResponseResult(150,"查询异常");
+        return new ResponseResult(200,"查询成功",count);
+    }
+
+    /**
+     * 根据部门角色查询用户信息
+     * @param params
+     * @return
+     */
+    @Override
+    public ResponseResult getByDeptRole(UserByDeptAndRoleParams params) {
+        int currIndex=(params.getPage()-1)*params.getPerPage();
+        List<UserView> userByPage = userMapper.getByDeptRole(params.getDeptId(),params.getRoleId(),currIndex, params.getPerPage());
+        return new ResponseResult(200,"查询成功",userByPage);
     }
 
     /**
