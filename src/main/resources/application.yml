@@ -34,8 +34,8 @@ spring:
             #			邮件工厂类路径
             class: tech.aowu.utils.mail.MailSocketFactory
   redis:
-    host: 10.10.11.254
-    port: 6379
+    host: currip.aowu.tech #10.10.11.254
+    port: 25463 #6379
     password: Ff17301576208
     database: 0
     jedis:

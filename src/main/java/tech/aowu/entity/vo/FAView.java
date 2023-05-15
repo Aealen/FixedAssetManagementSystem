@@ -25,4 +25,6 @@ public class FAView {
     private String faDeptName;
     private Long faCustodianId;
     private String faCustodian;
+    private String baseLoc;
+
 }

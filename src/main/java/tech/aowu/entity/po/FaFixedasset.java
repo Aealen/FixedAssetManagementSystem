@@ -23,6 +23,7 @@ public class FaFixedasset {
   private long dep;
   private long custodian;
   private long delFlag;
+  private String baseLoc;
 
 
   public long getFid() {
